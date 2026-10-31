@@ -161,83 +161,104 @@ body{background:radial-gradient(900px 500px at 50% -10%,#1a1410,transparent 70%)
 .end p{font-size:22px;color:var(--ink-2);margin-top:14px}
 .cmd{margin-top:38px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 26px;font:500 21px/1.75 var(--mono);box-shadow:var(--shadow)}
 .cmd div::before{content:"$ ";color:var(--accent)}
-</style></head>
+</style>
+<style>
+/* beat 2: the feed outruns you */
+.fast{position:absolute;left:110px;width:520px;top:176px;bottom:0;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 50px,#000 80%,transparent)}
+.fast .feed{gap:10px}
+.newp{position:absolute;left:370px;transform:translateX(-50%);font:600 13.5px var(--mono);color:var(--accent-ink);background:var(--accent);padding:8px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 10px 30px -10px #000}
+.day{position:absolute;left:700px;width:470px;top:176px}
+.clock{font:500 76px/1 var(--mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.clock small{font:500 14px var(--mono);color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin-left:14px;vertical-align:middle}
+.blocks{margin-top:22px;display:flex;flex-direction:column;gap:8px}
+.blk{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:center;height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:14.5px;font-weight:500}
+.blk span{font:500 13px var(--mono);color:var(--ink-3)}
+.blk.now{border-color:var(--ink-3);background:var(--surface-2)}
+/* beat 3: background reads */
+.screen{position:absolute;left:190px;right:190px;top:178px;height:270px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0f1013;box-shadow:var(--shadow)}
+.mbar{height:30px;display:flex;align-items:center;gap:18px;padding:0 14px;background:#17191d;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--ink-2)}
+.mbar b{color:var(--ink);font-weight:600}
+.mbar .ind{margin-left:auto;display:flex;align-items:center;gap:8px;padding:3px 10px;border-radius:7px;font:500 12px var(--mono);color:var(--ink)}
+.mbar .ind i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.mbar .clk{font:500 12px var(--mono);color:var(--ink);min-width:44px;text-align:right}
+.code{padding:14px 20px;font:400 13px/1.75 var(--mono);color:#8b8f98;white-space:pre}
+.code .k{color:#c792ea}.code .s{color:#c3e88d}.code .f{color:#82aaff}.code .c{color:#5c6370}
+.tl3{position:absolute;left:140px;width:1000px;top:540px;height:4px;background:var(--surface-2);border-radius:4px}
+.tl3 .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:4px}
+.cnt{position:absolute;left:0;right:0;top:612px;display:flex;justify-content:center;gap:12px}
+.cnt .pill{font-size:16px;padding:9px 16px;font-variant-numeric:tabular-nums}
+.cnt .pill b{color:var(--ink);font-weight:500}
+/* beat 4: notification */
+.note{position:absolute;left:50%;top:300px;width:420px;margin-left:-210px;display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:18px;background:color-mix(in srgb,var(--surface-2) 92%,transparent);border:1px solid var(--line);box-shadow:0 30px 60px -20px #000}
+.note .mark{width:40px;height:40px;border-radius:11px;box-shadow:inset 0 0 0 9px var(--surface-2);flex:none}
+.note small{font:500 12px var(--mono);color:var(--ink-3);display:block}
+.note b{font-size:17px;font-weight:600;display:block;margin-top:2px}
+.note span{font-size:13.5px;color:var(--ink-2)}
+/* end */
+.big{font-size:60px;line-height:1.08;font-weight:600;letter-spacing:-.04em;text-align:center}
+.big em{font-style:normal;color:var(--accent)}
+.end .logo{font-size:34px;gap:14px;margin-top:54px}
+.end .mark{width:32px;height:32px;border-radius:10px;box-shadow:inset 0 0 0 7px var(--bg)}
+.end .cmd{margin-top:22px}
+</style>
+</head>
 <body>
 
-<!-- 1 problem -->
+<!-- 1 the value of the feed -->
 <section class="layer" id="L1">
-  <div class="cap"><h2 id="c1a">Your feed has real signal.</h2><p id="c1b">You're never there to catch it.</p></div>
+  <div class="cap"><h2 id="c1a" style="font-size:40px">LinkedIn is where top engineers share what they build</h2><p id="c1b">and where new tech shows up first.</p></div>
   <div class="feedwin"><div class="feed" id="feed"></div></div>
 </section>
 
-<!-- 2 setup -->
+<!-- 2 the impossible part -->
 <section class="layer" id="L2">
-  <div class="cap"><h2>Set it up once.</h2><p id="c2b">It learns what you care about from your code and profile.</p></div>
-  <div class="setup">
-    <div class="col">
-      <div class="pane" id="p2a">
-        <header><h3>Your work</h3><span class="ok-pill" id="ok1">6 repos found</span></header>
-        <div class="chips"><span class="chip" id="fold">~/code <i>×</i></span><span class="chip add">+ Add folder</span></div>
-      </div>
-      <div class="pane" id="p2b">
-        <header><h3>LinkedIn</h3><span class="ok-pill" id="ok2">Signed in in Chrome</span></header>
-        <div class="li"><span class="av lg" style="--h:200">AR</span><div><b>Alex Rivera</b><div class="sub">AI engineer at a small agent startup</div><div class="m">4 roles · 6 skills</div></div></div>
-      </div>
-    </div>
-    <div class="pane" id="p2c">
-      <header><h3>What you care about</h3></header>
-      <div class="role" id="role"></div>
-      <ul class="ints" id="ints" style="list-style:none;padding:0"></ul>
-      <h4 id="nvh">Never show</h4>
-      <div class="chips" id="nv"><span class="chip">crypto <i>×</i></span><span class="chip">hiring takes <i>×</i></span></div>
-      <div class="schedrow" id="sch"><span class="time">09:00</span><span class="time">13:30</span><span class="time">18:45</span><span class="btn primary" id="go">Turn on daily reads</span></div>
-    </div>
+  <div class="cap"><h2>Keeping up means refreshing all day.</h2><p id="c2b">Nobody can.</p></div>
+  <div class="fast"><div class="feed" id="feed2"></div></div>
+  <div id="newps"></div>
+  <div class="day">
+    <div class="clock" id="clk">09:00<small>Tuesday</small></div>
+    <div class="blocks" id="blocks"></div>
   </div>
 </section>
 
-<!-- 3 reads -->
+<!-- 3 feedcast in the background -->
 <section class="layer" id="L3">
-  <div class="cap"><h2>Reads at <span class="mono acc">09:00 · 13:30 · 18:45</span></h2><p>In your own Chrome. Never clicks, likes or follows.</p></div>
-  <div class="tl" id="tl"><div class="fill" id="tlf"></div></div>
-  <div class="counters">
-    <div class="ctr"><b id="n1">0</b><span>posts read</span></div>
-    <div class="ctr"><b id="n2">0</b><span>ads dropped</span></div>
-    <div class="ctr"><b id="n3">0</b><span>repeats merged</span></div>
+  <div class="cap"><h2>Feedcast reads it for you.</h2><p id="c3b">In the background, all day.</p></div>
+  <div class="screen">
+    <div class="mbar"><b>Editor</b><span>File</span><span>Edit</span><span>View</span><span class="ind" id="ind"><i id="indd"></i><span id="indt">Feedcast</span></span><span class="clk" id="mclk">08:30</span></div>
+    <div class="code"><span class="c">// evals/run.ts</span>
+<span class="k">import</span> { replay } <span class="k">from</span> <span class="s">"./replay"</span>;
+
+<span class="k">export async function</span> <span class="f">gate</span>(runs: Run[]) {
+  <span class="k">const</span> score = <span class="k">await</span> <span class="f">replay</span>(runs, { judge: <span class="s">"strict"</span> });
+  <span class="k">if</span> (score.drop &gt; <span class="s">0.03</span>) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">"regression"</span>);
+  <span class="k">return</span> score;<i class="caret" id="ec"></i>
+}</div>
   </div>
-  <div class="chrome" id="chips3"><span class="pill">read-only</span><span class="pill">human pace</span><span class="pill">stops on any security check</span></div>
+  <div class="tl3" id="tl"><div class="fill" id="tlf"></div></div>
+  <div class="cnt" id="cnt"><span class="pill"><b id="n1">0</b> posts read</span><span class="pill"><b id="n2">0</b> ads dropped</span><span class="pill"><b>0</b> clicks</span></div>
 </section>
 
-<!-- 4 filter -->
-<section class="layer" id="L4">
-  <div class="cap"><h2>Keeps only what matches you.</h2><p id="c4b">The same repo from three people becomes one card.</p></div>
-  <div class="colh" style="left:80px">Read</div>
-  <div class="colh" style="left:470px"><b>Kept for you</b></div>
-  <div class="colh" style="left:900px">Skipped</div>
-  <div id="rows"></div>
-  <div class="merged" id="mg">
-    <div class="top"><span class="stack"><span class="av sm" style="--h:20">TK</span><span class="av sm" style="--h:330">MO</span><span class="av sm" style="--h:150">PR</span></span><b>agent-replay for eval regressions in CI</b><span class="badge">shared by 3</span></div>
-    <div class="res"><span class="k">Repo</span><span class="rt">oyelaran-labs/agent-replay</span><span class="rs">github.com</span></div>
-  </div>
-</section>
-
-<!-- 5 evening page -->
+<!-- 4 end of day -->
 <section class="layer" id="L5">
-  <div class="cap" style="top:40px"><h2 style="font-size:38px">One visual page, every evening.</h2></div>
+  <div class="cap" style="top:40px"><h2 style="font-size:38px" id="c4a">At the end of the day…</h2></div>
+  <div class="cap" style="top:40px"><h2 style="font-size:38px" id="c4b">Everything you missed, on one page.</h2></div>
+  <div class="note" id="note"><span class="mark"></span><div><small>Feedcast · 19:30</small><b>Your feed for today is ready</b><span>9 for you · 142 posts read</span></div></div>
   <div class="win" id="win"><div class="page" id="page">
     <div class="ptop"><span class="logo"><span class="mark"></span>Feedcast</span>
       <div class="reads"><span><b>09:00</b><i><u id="r1"></u></i></span><span><b>13:30</b><i><u id="r2"></u></i></span><span><b>18:45</b><i><u id="r3"></u></i></span></div>
       <span class="pill">Setup</span></div>
     <div class="pin">
-      <div class="date" id="dt">Friday evening · 30 October</div>
+      <div class="date" id="dt">Tuesday evening · 27 October</div>
       <h1 id="h1"></h1>
-      <div class="pills" id="pl"><span class="pill strong">6 for you</span><span class="pill">91 posts read</span><span class="pill">68 skipped</span><span class="pill">14 ads dropped</span></div>
-      <div class="tabs" id="tb"><span class="tab on">All <span>6</span></span><span class="tab">Agent evals <span>3</span></span><span class="tab">MCP tool search <span>2</span></span><span class="tab">pptx layout <span>1</span></span></div>
+      <div class="pills" id="pl"><span class="pill strong">9 for you</span><span class="pill">142 posts read</span><span class="pill">102 skipped</span><span class="pill">31 ads dropped</span></div>
+      <div class="tabs" id="tb"><span class="tab on">All <span>9</span></span><span class="tab">Agent evals <span>4</span></span><span class="tab">MCP tool search <span>3</span></span><span class="tab">pptx layout <span>2</span></span></div>
       <article class="card hero" id="hero">
         <div class="img repo" style="--h:18"><div><div class="o">oyelaran-labs /</div><div class="n">agent-replay</div><div class="d">Replay recorded agent runs. Fail CI on regressions.</div></div><div class="ci"><div><span class="g">✓</span> 397 conversations replayed</div><div><span class="r">✗</span> 3 tool-call regressions</div><div><span class="r">✗</span> accuracy 94.1% → 90.8% · deploy blocked</div></div><div class="s"><span>★ 2.1k</span><span>Python</span><span>MIT</span></div></div>
         <div class="body">
           <div class="meta"><span class="topic">Agent evals</span><span class="badge">shared by 3</span></div>
           <h3>agent-replay turns 400 recorded conversations into a CI gate that fails on a 3% accuracy drop</h3>
-          <p class="wy">Three people you follow use it to catch tool-call regressions before deploy, at about $11 per run.</p>
+          <p class="wy">Three engineers you follow use it to catch tool-call regressions before deploy, at about $11 per run.</p>
           <div class="res"><span class="k">Repo</span><span class="rt">oyelaran-labs/agent-replay</span><span class="rs">github.com</span></div>
           <footer><span class="stack"><span class="av sm" style="--h:20">TK</span><span class="av sm" style="--h:330">MO</span><span class="av sm" style="--h:150">PR</span></span><span class="who">Tomasz Kowal, Mariana Oyelaran<small>and Priya Raghunathan</small></span><span class="stat">1,240 ♥</span><span class="open">Open ↗</span></footer>
         </div>
@@ -269,10 +290,10 @@ body{background:radial-gradient(900px 500px at 50% -10%,#1a1410,transparent 70%)
   </div></div>
 </section>
 
-<!-- end -->
+<!-- 5 end card -->
 <section class="layer end" id="L6">
+  <div class="big" id="ebig">No knowledge is missed<br>when <em>Feedcast</em> is set.</div>
   <div class="logo" id="elg"><span class="mark"></span>Feedcast</div>
-  <p id="etg">Your LinkedIn feed, read for you. One page each evening.</p>
   <div class="cmd" id="ecmd"><div>uv tool install git+https://github.com/jcodebreaker/feedcast</div><div>feedcast setup</div></div>
 </section>
 
@@ -282,175 +303,151 @@ const cl = (x) => Math.max(0, Math.min(1, x));
 const seg = (t, a, b) => cl((t - a) / (b - a));
 const ease = (x) => 1 - Math.pow(1 - x, 3);
 const inout = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-const win = (t, a, b, f = .45) => Math.min(ease(seg(t, a, a + f)), 1 - seg(t, b - f, b));
+const win = (t, a, b, f = .5) => Math.min(ease(seg(t, a, a + f)), 1 - seg(t, b - f, b));
 const show = (el, o, dy = 0) => { el.style.opacity = o; el.style.transform = `translateY(${(1 - o) * dy}px)`; };
 const lerp = (a, b, x) => a + (b - a) * x;
 const ini = (n) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
 const hue = (n) => [...n].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
+const hm = (h) => `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.floor((h % 1) * 60 / 5) * 5).padStart(2, '0')}`;
 
-/* ---------- 1 feed (invented posts from fixtures/capture-sample.json) ---------- */
-const FEED = [
-  ['Carlos Nwosu', 'Founder · 5h', "Vibe coding is dead. Here's what's next.", null, '1,900 reactions · 410 comments'],
-  ['Tomasz Kowal', 'ML engineer · 6h', 'Everyone should look at agent-replay for eval regressions in CI.', ['{ }', 'oyelaran-labs/agent-replay', 'github.com', 'repo'], '210 reactions · 15 comments'],
-  ['Acme AI', 'Promoted', 'Scale your sales team with AI SDRs.', ['AD', 'Book a demo', 'acme.example', null], ''],
-  ['Hélène Marchetti', 'Eng manager · 8h', "We replaced leetcode with 'write an eval' in interviews.", null, '520 reactions · 90 comments'],
-  ['Samir Khoury', 'Open source · 1d', '1,100 agent eval cases, grouped by failure mode, MIT licensed.', ['{ }', 'khoury-ai/agent-failure-cases', 'github.com', 'repo'], '388 reactions · 31 comments'],
-  ['Yusuf Adebayo', 'On-device ML · 1d', 'Quantisation regressions nobody benchmarks.', null, '97 reactions · 8 comments'],
-  ['Anneliese Brandt', 'Researcher · 1d', 'New paper: LLM judges disagree with humans 31% of the time on tool use grading.', ['PDF', 'When Does the Judge Disagree?', 'arxiv.org', 'paper'], '144 reactions · 22 comments'],
-  ['Ines Castellanos', 'Security engineer · 2d', 'MCP auth is still unsolved: per-user tokens vs server-wide credentials. Link in comments.', null, '260 reactions · 48 comments'],
-  ['Priya Raghunathan', 'Applied scientist · 2d', 'Three retrieved examples beat our 2,400-token rule list: 86% vs 81%.', ['{ }', 'priya-r / few-shot-vs-rules', 'gist.github.com', 'gist'], '402 reactions · 27 comments'],
+/* invented posts (names from fixtures/capture-sample.json) */
+const VALUE = [
+  ['Mariana Oyelaran', 'Eval lead · 2h', 'We open-sourced agent-replay: replay 400 recorded agent runs in CI and fail the deploy on a 3% drop.', ['{ }', 'oyelaran-labs/agent-replay', 'github.com', 'repo launch'], '1,240 reactions · 54 comments'],
+  ['Anneliese Brandt', 'Researcher · 3h', 'New paper: LLM judges disagree with humans 31% of the time on tool-use grading.', ['PDF', 'When Does the Judge Disagree?', 'arxiv.org', 'paper'], '144 reactions · 22 comments'],
+  ['Astrid Lindqvist', 'Maintainer of slidefit · 4h', 'We shipped slidefit 0.3: text that fits the box before you render a pptx.', ['{ }', 'lindqvist/slidefit', 'github.com', 'shipped'], '164 reactions · 12 comments'],
+  ['Deng Weiming', 'Staff engineer · 5h', '212 tools, 9 MCP servers, one search step. Wrong-tool rate fell from 7% to under 1%.', ['↗', '212 tools, one search step', 'weiming.engineering', 'trend'], '341 reactions · 40 comments'],
+  ['Samir Khoury', 'Open source · 6h', '1,100 agent eval cases, grouped by failure mode, MIT licensed.', ['{ }', 'khoury-ai/agent-failure-cases', 'github.com', 'dataset'], '388 reactions · 31 comments'],
+  ['Priya Raghunathan', 'Applied scientist · 7h', 'Three retrieved examples beat our 2,400-token rule list: 86% vs 81%.', ['{ }', 'priya-r / few-shot-vs-rules', 'gist.github.com', null], '402 reactions · 27 comments'],
 ];
-$('feed').innerHTML = FEED.map(([n, h, tx, pv, rx], i) => `<div class="post" id="po${i}"><div class="hd"><span class="av" style="--h:${hue(n)}">${ini(n)}</span><div><b>${n}</b><small>${h}</small></div></div><p class="tx">${tx}</p>${pv ? `<div class="pv" id="pv${i}"><div class="th">${pv[0]}</div><div class="pt">${pv[1]}<small>${pv[2]}</small></div>${pv[3] ? `<span class="tag" id="tg${i}">${pv[3]}</span>` : ''}</div>` : ''}${rx ? `<div class="rx">${rx}</div>` : ''}</div>`).join('');
+const NOISE = [
+  ['Carlos Nwosu', 'Founder · now', "Vibe coding is dead. Here's what's next.", null, ''],
+  ['Acme AI', 'Promoted', 'Scale your sales team with AI SDRs.', ['AD', 'Book a demo', 'acme.example', null], ''],
+  ['Hélène Marchetti', 'Eng manager · now', "We replaced leetcode with 'write an eval' in interviews.", null, ''],
+  ['Yusuf Adebayo', 'On-device ML · now', 'Quantisation regressions nobody benchmarks.', null, ''],
+  ['Ines Castellanos', 'Security engineer · now', 'MCP auth is still unsolved: per-user tokens vs server-wide credentials.', null, ''],
+];
+const postHtml = ([n, h, tx, pv, rx], id) => `<div class="post"${id ? ` id="po${id}"` : ''}><div class="hd"><span class="av" style="--h:${hue(n)}">${ini(n)}</span><div><b>${n}</b><small>${h}</small></div></div><p class="tx">${tx}</p>${pv ? `<div class="pv"${id ? ` id="pv${id}"` : ''}><div class="th">${pv[0]}</div><div class="pt">${pv[1]}<small>${pv[2]}</small></div>${pv[3] ? `<span class="tag"${id ? ` id="tg${id}"` : ''}>${pv[3]}</span>` : ''}</div>` : ''}${rx ? `<div class="rx">${rx}</div>` : ''}</div>`;
+$('feed').innerHTML = VALUE.map((p, i) => postHtml(p, String(i))).join('');
+const MIX = [];
+for (let r = 0; r < 5; r++) for (let i = 0; i < 6; i++) MIX.push(i % 2 ? NOISE[(i + r) % NOISE.length] : VALUE[(i + r * 2) % VALUE.length]);
+$('feed2').innerHTML = MIX.map((p) => postHtml([p[0], p[1], p[2], p[3] ? [...p[3].slice(0, 3), null] : null, ''])).join('');
 
-/* ---------- 2 setup ---------- */
-const ROLE = 'AI engineer: agents, MCP, evals; TypeScript, Python';
-const INTS = [['agent evals and regression testing', .9], ['MCP tool search', .9], ['LLM judges and grading', .75], ['pptx layout', .7], ['open eval datasets', .6], ['few-shot vs rule prompts', .45]];
-$('ints').innerHTML = INTS.map(([n], i) => `<li class="int" id="in${i}"><span class="t">${n}</span><span class="w"><i id="iw${i}"></i></span></li>`).join('');
+const NEWP = [[9.4, '+12 new posts'], [10.6, '+27 new posts'], [11.6, '+48 new posts'], [12.5, '+81 new posts'], [13.3, '+130 new posts'], [14.0, '+210 new posts']];
+$('newps').innerHTML = NEWP.map((_, i) => `<span class="newp" id="np${i}">${NEWP[i][1]}</span>`).join('');
+const BLOCKS = [[9, 'Standup'], [10, 'Deep work'], [11.5, 'Code review'], [13, 'Design sync'], [14.5, 'Incident review'], [16, 'Deep work'], [17.5, '1:1']];
+$('blocks').innerHTML = BLOCKS.map(([h, n], i) => `<div class="blk" id="bk${i}"><span>${hm(h)}</span>${n}</div>`).join('');
 
-/* ---------- 3 timeline: 07:00 → 21:00 ---------- */
-const X = (h) => ((h - 7) / 14) * 1000;
-const READS = [[9, '09:00', [36, 5, 3]], [13.5, '13:30', [61, 9, 6]], [18.75, '18:45', [91, 14, 9]]];
+/* reads timeline 08:00 → 20:00 */
+const X = (h) => ((h - 8) / 12) * 1000;
+const READS = [[9, '09:00', [48, 11]], [13.5, '13:30', [95, 22]], [18.75, '18:45', [142, 31]]];
 let tlh = '';
-READS.forEach(([h, lb, c], i) => { tlh += `<div class="rd" id="rd${i}" style="left:${X(h)}px"><div class="lb">${lb}</div><div class="d" id="rdd${i}"></div><div class="n" id="rdn${i}">${[36, 25, 30][i]} posts</div></div>`; });
-tlh += `<div class="rd pg" id="rdp" style="left:${X(19.5)}px"><div class="lb" style="font-size:13px;color:var(--ink-2);left:-11px;transform:none;bottom:-34px">19:30 page</div><div class="d" id="rddp"></div></div><div class="head" id="hd"></div>`;
+READS.forEach(([h, lb], i) => { tlh += `<div class="rd" style="left:${X(h)}px"><div class="lb">${lb}</div><div class="d" id="rdd${i}"></div></div>`; });
+tlh += `<div class="head" id="hd"></div>`;
 $('tl').insertAdjacentHTML('beforeend', tlh);
 
-/* ---------- 4 filter rows ---------- */
-// [name, snippet, kept?, tag, mergeGroup]
-const ROWS = [
-  ['Carlos Nwosu', 'Vibe coding is dead.', 0, 'no match'],
-  ['Tomasz Kowal', 'Look at agent-replay for eval regressions', 1, 'agent evals', 1],
-  ['Acme AI', 'Scale your sales team with AI SDRs.', 0, 'ad'],
-  ['Mariana Oyelaran', 'agent-replay 1.0: we fail deploys on a 3% drop', 1, 'agent evals', 1],
-  ['Hélène Marchetti', "Replaced leetcode with 'write an eval'", 0, 'hiring takes'],
-  ['Deng Weiming', '212 tools, 9 MCP servers, one search step', 1, 'MCP tool search'],
-  ['Priya Raghunathan', 'We gate every PR with agent-replay now', 1, 'agent evals', 1],
-  ['Yusuf Adebayo', 'Quantisation regressions nobody benchmarks.', 0, 'no match'],
-  ['Anneliese Brandt', 'LLM judges disagree with humans 31% of the time', 1, 'agent evals'],
-];
-let k = 0, s = 0;
-ROWS.forEach((r) => { r.slot = r[2] ? k++ : s++; });
-$('rows').innerHTML = ROWS.map(([n, sn, kept, tag], i) => `<div class="row" id="rw${i}"><span class="av sm" style="--h:${hue(n)}">${ini(n)}</span><span class="nm">${n}</span><span class="sn">${sn}</span><span class="${kept ? 'tp' : 'why'}" id="rt${i}" style="opacity:0">${tag}</span></div>`).join('');
-
-/* ---------- 5 headline ---------- */
-const H1 = 'A focused feed tonight. Eval gating went mainstream: <b>agent-replay was shared by 3</b> people you follow, and one search step cut wrong-tool calls to <b>under 1%</b>.';
+/* headline */
+const H1 = 'A full day on your feed. Eval gating went mainstream: <b>agent-replay was shared by 3</b> engineers you follow, and one search step cut wrong-tool calls to <b>under 1%</b>.';
 let wi = 0;
 $('h1').innerHTML = H1.split(/(<b>.*?<\/b>)/).map((part) => {
   const b = part.startsWith('<b>');
   const words = part.replace(/<\/?b>/g, '').split(' ').filter(Boolean).map((w) => `<span id="w${wi++}">${w}</span>`).join(' ');
   return b ? `<b>${words}</b>` : words;
 }).reduce((acc, x) => acc + (acc && !/^<span id="w\d+">[.,:]/.test(x) ? ' ' : '') + x, '');
-const H1W = Array.from({ length: wi });
+const NW = wi;
 
-/* ---------- timeline (seconds) ---------- */
-const B1 = [0, 6.2], B2 = [6, 14.2], B3 = [14, 22.2], B4 = [22, 30.2], B5 = [30, 37.6], B6 = 37.4;
-window.DURATION = 40;
+const B1 = [0, 8.2], B2 = [8, 15.2], B3 = [15, 24.2], B4 = [24, 36.2], B5 = 36;
+window.DURATION = 44;
 
 window.render = (t) => {
-  // 1 problem: the feed scrolls by; shared links light up as they pass
+  // 1 value: posts from top engineers, each kind lit as it passes
   $('L1').style.opacity = win(t, B1[0] - 1, B1[1]);
-  show($('c1a'), ease(seg(t, .2, 1.0)), 16);
-  show($('c1b'), ease(seg(t, 1.8, 2.6)), 10);
-  const feedH = $('feed').offsetHeight;
-  const sy = -inout(seg(t, .4, 6.2)) * (feedH - 420);
+  show($('c1a'), ease(seg(t, .2, 1.1)), 16);
+  show($('c1b'), ease(seg(t, 1.6, 2.4)), 10);
+  const sy = -inout(seg(t, .6, 8.2)) * ($('feed').offsetHeight - 430);
   $('feed').style.transform = `translateY(${sy}px)`;
-  FEED.forEach((p, i) => {
-    if (!p[3] || !p[3][3]) return;
+  VALUE.forEach((p, i) => {
+    if (!p[3][3]) return;
     const el = $('po' + i), pv = $('pv' + i);
     const cy = el.offsetTop + el.offsetHeight / 2 + sy;
-    const h = ease(seg(-cy, -470, -360));
+    const h = ease(seg(-cy, -480, -360));
     pv.style.borderColor = `color-mix(in srgb, var(--accent) ${h * 100}%, #2a2d33)`;
     pv.style.boxShadow = `0 0 0 ${h * 4}px color-mix(in srgb, var(--accent) 18%, transparent)`;
     $('tg' + i).style.opacity = h;
   });
 
-  // 2 setup
+  // 2 the feed accelerates while the workday fills up
   $('L2').style.opacity = win(t, ...B2);
-  show($('c2b'), ease(seg(t, B2[0] + .6, B2[0] + 1.3)), 10);
-  show($('p2a'), ease(seg(t, 6.3, 6.8)), 16);
-  show($('ok1'), ease(seg(t, 7.2, 7.5)));
-  show($('p2b'), ease(seg(t, 7.0, 7.5)), 16);
-  show($('ok2'), ease(seg(t, 7.9, 8.2)));
-  show($('p2c'), ease(seg(t, 8.0, 8.5)), 16);
-  const rl = Math.floor(seg(t, 8.6, 9.9) * ROLE.length);
-  $('role').innerHTML = ROLE.slice(0, rl) + (t > 8.4 && rl < ROLE.length ? '<i class="caret"></i>' : '');
-  INTS.forEach(([, w], i) => { const a = 9.9 + i * .22; show($('in' + i), ease(seg(t, a, a + .35)), 8); $('iw' + i).style.width = `${w * 100 * ease(seg(t, a + .2, a + .9))}%`; });
-  show($('nvh'), ease(seg(t, 11.5, 11.9))); show($('nv'), ease(seg(t, 11.6, 12.0)), 6);
-  show($('sch'), ease(seg(t, 11.9, 12.3)), 6);
-  const press = seg(t, 12.9, 13.2);
-  const go = $('go');
-  go.style.transform = `scale(${1 - .06 * Math.sin(press * Math.PI)})`;
-  if (t >= 13.05) { go.className = 'btn on'; go.textContent = 'Daily reads on ✓'; } else { go.className = 'btn primary'; go.textContent = 'Turn on daily reads'; }
+  show($('c2b'), ease(seg(t, 10.2, 10.9)), 10);
+  const d = Math.max(0, t - 8.3);
+  $('feed2').style.transform = `translateY(${-(30 * d + 70 * d * d)}px)`;
+  NEWP.forEach(([at], i) => {
+    const el = $('np' + i);
+    const o = ease(seg(t, at, at + .3));
+    const later = NEWP.filter(([a]) => a <= t && a > at).length;
+    el.style.opacity = o * Math.max(0, 1 - later * .28);
+    el.style.top = `${196 + later * 40 + (1 - o) * -12}px`;
+    el.style.transform = `translateX(-50%) scale(${1 - later * .05})`;
+    el.style.zIndex = 10 - later;
+  });
+  const hour = 9 + 9 * Math.pow(seg(t, 8.4, 14.6), 1.4);
+  $('clk').firstChild.textContent = hm(hour);
+  BLOCKS.forEach(([h], i) => {
+    const el = $('bk' + i);
+    const next = BLOCKS[i + 1] ? BLOCKS[i + 1][0] : 18.5;
+    show(el, ease(seg(hour, h - .6, h - .1)), 8);
+    el.className = hour >= h && hour < next ? 'blk now' : 'blk';
+  });
 
-  // 3 reads
+  // 3 background reads
   $('L3').style.opacity = win(t, ...B3);
-  const pr = seg(t, 14.6, 20.8);
-  const hx = pr * X(20.2);
-  $('tlf').style.width = `${hx}px`;
-  $('hd').style.left = `${hx}px`; $('hd').style.opacity = pr > 0 && pr < 1 ? 1 : pr >= 1 ? 1 - seg(t, 20.8, 21.2) : 0;
-  let cnt = [0, 0, 0];
+  show($('c3b'), ease(seg(t, 16.0, 16.7)), 10);
+  const pr = seg(t, 16.0, 23.0);
+  const hx = pr * X(20);
+  $('tlf').style.width = `${hx}px`; $('hd').style.left = `${hx}px`;
+  $('mclk').textContent = hm(8 + 12 * pr);
+  let cnt = [0, 0], reading = 0;
   READS.forEach(([h, , c], i) => {
-    const at = 14.6 + (X(h) / X(20.2)) * 6.2;
+    const at = 16.0 + (X(h) / X(20)) * 7;
     const f = ease(seg(t, at - .05, at + .25));
-    const d = $('rdd' + i);
-    d.style.background = `color-mix(in srgb, var(--accent) ${f * 100}%, var(--bg))`;
-    d.style.borderColor = f > .01 ? 'var(--accent)' : 'var(--ink-3)';
-    d.style.boxShadow = `0 0 0 ${8 * Math.sin(seg(t, at, at + .6) * Math.PI)}px color-mix(in srgb, var(--accent) 25%, transparent)`;
-    $('rdn' + i).style.opacity = ease(seg(t, at + .1, at + .5));
-    const prev = i ? READS[i - 1][2] : [0, 0, 0];
-    const x = ease(seg(t, at, at + 1.1));
-    if (t >= at) cnt = c.map((v, j) => Math.round(lerp(prev[j], v, x)));
+    const dd = $('rdd' + i);
+    dd.style.background = `color-mix(in srgb, var(--accent) ${f * 100}%, var(--bg))`;
+    dd.style.borderColor = f > .01 ? 'var(--accent)' : 'var(--ink-3)';
+    const pulse = Math.sin(seg(t, at, at + 1.2) * Math.PI);
+    dd.style.boxShadow = `0 0 0 ${14 * pulse}px color-mix(in srgb, var(--accent) ${30 * (1 - seg(t, at, at + 1.2))}%, transparent)`;
+    reading = Math.max(reading, pulse);
+    const prev = i ? READS[i - 1][2] : [0, 0];
+    if (t >= at) cnt = c.map((v, j) => Math.round(lerp(prev[j], v, ease(seg(t, at, at + 1.2)))));
   });
-  const pg = ease(seg(t, 20.5, 20.9));
-  $('rddp').style.background = `color-mix(in srgb, var(--ink) ${pg * 100}%, var(--bg))`;
-  $('rddp').style.borderColor = pg > .01 ? 'var(--ink)' : 'var(--ink-3)';
-  $('n1').textContent = cnt[0]; $('n2').textContent = cnt[1]; $('n3').textContent = cnt[2];
-  show($('chips3'), ease(seg(t, 15.4, 16.0)), 8);
+  $('indt').textContent = reading > .05 ? 'Feedcast · reading' : 'Feedcast';
+  $('ind').style.background = `color-mix(in srgb, var(--accent) ${reading * 22}%, transparent)`;
+  $('indd').style.opacity = .45 + .55 * reading;
+  $('ec').style.opacity = Math.floor(t * 2) % 2 ? 0 : 1;
+  $('n1').textContent = cnt[0]; $('n2').textContent = cnt[1];
+  show($('cnt'), ease(seg(t, 16.4, 17.0)), 8);
 
-  // 4 filter
-  $('L4').style.opacity = win(t, ...B4);
-  show($('c4b'), ease(seg(t, 26.6, 27.2)), 8);
-  const ROW0 = 214, STEP = 54;
-  const mg = ease(seg(t, 27.0, 27.7));
-  ROWS.forEach((r, i) => {
-    const el = $('rw' + i);
-    const enter = ease(seg(t, 22.2 + i * .07, 22.6 + i * .07));
-    const at = 23.0 + i * .42;
-    const m = inout(seg(t, at, at + .55));
-    let x = lerp(80, r[2] ? 470 : 900, m), y = lerp(ROW0 + i * STEP, ROW0 + r.slot * STEP, m);
-    const w = lerp(360, r[2] ? 400 : 300, m);
-    let o = enter * (r[2] ? 1 : lerp(1, .5, m));
-    if (r[2]) {
-      if (r[4]) { y = lerp(y, ROW0 + 6, mg); o *= 1 - seg(t, 27.2, 27.6); }
-      else { const after = ROWS.filter((q, j) => q[2] && !q[4] && j < i).length; y = lerp(y, ROW0 + $('mg').offsetHeight + 8 + after * STEP, mg); }
-    }
-    el.style.left = `${x}px`; el.style.top = `${y}px`; el.style.width = `${w}px`; el.style.opacity = o;
-    el.style.transform = `translateX(${(1 - enter) * -20}px)`;
-    $('rt' + i).style.opacity = ease(seg(t, at + .35, at + .6));
-    el.style.textDecoration = 'none';
-  });
-  const mo = ease(seg(t, 27.3, 27.8));
-  $('mg').style.opacity = mo; $('mg').style.transform = `scale(${lerp(.94, 1, mo)})`;
-
-  // 5 evening page
-  $('L5').style.opacity = win(t, ...B5);
-  const wv = ease(seg(t, 30.1, 30.8));
-  $('win').style.transform = `translateY(${(1 - wv) * 80}px)`;
-  [['r1', 30.6], ['r2', 30.8], ['r3', 31.0]].forEach(([id, a]) => { $(id).style.width = `${100 * ease(seg(t, a, a + .5))}%`; });
-  show($('dt'), ease(seg(t, 30.9, 31.3)), 6);
-  H1W.forEach((_, i) => { const a = 31.1 + i * .045; $('w' + i).style.opacity = ease(seg(t, a, a + .3)); });
+  // 4 end of day: notification, then the page builds
+  $('L5').style.opacity = win(t, ...B4);
+  show($('c4a'), ease(seg(t, 24.2, 24.8)) * (1 - seg(t, 26.6, 27.0)), 10);
+  show($('c4b'), ease(seg(t, 27.0, 27.5)), 10);
+  const no = ease(seg(t, 24.8, 25.3)) * (1 - seg(t, 26.9, 27.3));
+  $('note').style.opacity = no; $('note').style.transform = `translateY(${(1 - ease(seg(t, 24.8, 25.3))) * -24}px) scale(${lerp(1, .96, seg(t, 26.9, 27.3))})`;
+  const T = 27.1;
+  $('win').style.transform = `translateY(${(1 - ease(seg(t, T, T + .7))) * 640}px)`;
+  [['r1', T + .5], ['r2', T + .7], ['r3', T + .9]].forEach(([id, a]) => { $(id).style.width = `${100 * ease(seg(t, a, a + .5))}%`; });
+  show($('dt'), ease(seg(t, T + .8, T + 1.2)), 6);
+  for (let i = 0; i < NW; i++) { const a = T + 1.0 + i * .05; $('w' + i).style.opacity = ease(seg(t, a, a + .3)); }
   $('h1').querySelectorAll('b').forEach((b) => { b.style.opacity = b.firstElementChild.style.opacity; });
-  show($('pl'), ease(seg(t, 32.6, 33.0)), 6);
-  show($('tb'), ease(seg(t, 32.9, 33.3)), 6);
-  show($('hero'), ease(seg(t, 33.3, 33.9)), 20);
-  ['g1', 'g2', 'g3'].forEach((g, i) => show($(g), ease(seg(t, 34.3 + i * .25, 34.9 + i * .25)), 24));
-  $('page').style.transform = `translateY(${-inout(seg(t, 34.4, 36.4)) * 300}px)`;
+  show($('pl'), ease(seg(t, T + 2.7, T + 3.1)), 6);
+  show($('tb'), ease(seg(t, T + 3.0, T + 3.4)), 6);
+  show($('hero'), ease(seg(t, T + 3.4, T + 4.0)), 20);
+  ['g1', 'g2', 'g3'].forEach((g, i) => show($(g), ease(seg(t, T + 4.6 + i * .25, T + 5.2 + i * .25)), 24));
+  $('page').style.transform = `translateY(${-inout(seg(t, T + 4.6, T + 6.8)) * 300}px)`;
 
-  // end card
-  $('L6').style.opacity = ease(seg(t, B6, B6 + .6));
-  show($('elg'), ease(seg(t, B6 + .1, B6 + .7)), 12);
-  show($('etg'), ease(seg(t, B6 + .5, B6 + 1.1)), 10);
-  show($('ecmd'), ease(seg(t, B6 + .9, B6 + 1.5)), 12);
+  // 5 end card
+  $('L6').style.opacity = ease(seg(t, B5, B5 + .6));
+  show($('ebig'), ease(seg(t, B5 + .3, B5 + 1.2)), 16);
+  show($('elg'), ease(seg(t, B5 + 2.6, B5 + 3.2)), 10);
+  show($('ecmd'), ease(seg(t, B5 + 3.2, B5 + 3.8)), 10);
 };
 window.render(0);
 </script>

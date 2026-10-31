@@ -1,10 +1,12 @@
 # Feedcast
 
-Your LinkedIn feed, read for you. One page each evening.
+**No knowledge is missed when Feedcast is set.**
 
 <p align="center"><img src="docs/feedcast.gif" alt="Feedcast: setup, three reads a day, one evening page" width="800"></p>
 
-Your feed carries real signal: new repos, papers and tools, often from people you don't follow. You're never on it long enough to catch them. Feedcast scrolls your feed in your own Chrome three times a day, keeps only what matches what you care about, and hands you one visual page at 19:30 with the repos, papers and articles people shared pulled out front.
+LinkedIn is where top engineers share what they build and what they've shipped, and where new tech shows up first. Staying on top of it means checking a feed that refreshes every second, which nobody can do while doing their own work.
+
+Feedcast reads it for you in the background, all day. At the end of the day you get one page: everything you missed that matters to you, with the repos, papers and articles people shared pulled out front.
 
 - **Reads like a person.** Your own logged-in Chrome, a few minutes at a time, at human pace. It never clicks, likes, follows or comments. Any LinkedIn security check stops it and it waits for you.
 - **Knows what you care about.** A short interest profile built from your local repos, your Claude Code session titles and your LinkedIn profile. You can edit every line.
