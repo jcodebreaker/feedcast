@@ -16,7 +16,7 @@ PROFILE_MAX_AGE_H = 48
 def _roots(cfg):
     roots = cfg["roots"]
     if not roots:
-        return False, "work folders", "none set, run `feedcast init`"
+        return False, "work folders", "none set, run `feedcast setup`"
     missing = [r for r in roots if not Path(r).expanduser().is_dir()]
     if missing:
         return False, "work folders", f"missing: {', '.join(missing)}"
@@ -28,7 +28,7 @@ def _profile(cfg):
         prof = yaml.safe_load(config.profile_path().read_text()) or {}
         at = datetime.fromisoformat(str(prof["generated_at"]).replace("Z", "+00:00"))
     except (FileNotFoundError, KeyError, ValueError, TypeError, yaml.YAMLError):
-        return False, "profile", "not built yet, run `feedcast profile`"
+        return False, "profile", "not built yet, run `feedcast setup`"
     hours = (datetime.now(timezone.utc) - at).total_seconds() / 3600
     age = f"{hours:.0f}h old" if hours < 48 else f"{hours / 24:.0f} days old"
     return hours < PROFILE_MAX_AGE_H, "profile", age
@@ -39,7 +39,7 @@ def _api_key(cfg):
         return True, "API key", "from ANTHROPIC_API_KEY"
     # No -w: this asks whether the item exists and never returns the secret.
     res = capture.run(["security", "find-generic-password", "-s", "feedcast", "-a", "anthropic"])
-    return (True, "API key", "in Keychain") if res.returncode == 0 else (False, "API key", "missing, run `feedcast init`")
+    return (True, "API key", "in Keychain") if res.returncode == 0 else (True, "models", "no API key, using claude -p on your plan")
 
 
 def _chrome(cfg):
@@ -77,7 +77,7 @@ def _jobs(cfg):
     have = {p.stem for p in schedule.installed()}
     if want <= have:
         return True, "schedule", f"{len(want)} jobs installed"
-    return False, "schedule", f"{len(want - have)} of {len(want)} jobs missing, run `feedcast schedule install`"
+    return False, "schedule", f"{len(want - have)} of {len(want)} jobs missing, turn on daily reads in `feedcast setup`"
 
 
 def _gh(cfg):

@@ -238,7 +238,7 @@ class DoctorTest(Base):
         config.paused_path().write_text("aborted_not_signed_in")
         code, out = self.feedcast("doctor")
         self.assertEqual(code, 1)
-        for line in ["✗ work folders", "✗ profile", "✗ API key", "✗ Chrome", "✗ captures: paused", "✗ last run: none yet",
+        for line in ["✗ work folders", "✗ profile", "✓ models: no API key", "✗ Chrome", "✗ captures: paused", "✗ last run: none yet",
                      "✗ schedule", "✓ claude", "✓ gh token"]:
             self.assertIn(line, out)
 
