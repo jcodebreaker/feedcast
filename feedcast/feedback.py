@@ -17,9 +17,18 @@ import sys
 import time
 import urllib.request
 from datetime import datetime, timezone
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer as HTTPServer
+import hashlib
+import signal
+from pathlib import Path
 
 from . import config, db, media, setup
+
+# Changes whenever the server code or its pages change, so `ensure_server` can replace a server
+# left running from an older version instead of handing the browser its stale pages.
+_SRC = Path(__file__).resolve().parent
+BUILD = hashlib.sha1(b"".join(f.read_bytes() for f in sorted([*_SRC.glob("*.py"), *_SRC.glob("templates/*")]))).hexdigest()[:12]
+PING = b"feedcast " + BUILD.encode()
 
 PORT = 8765
 IDLE_S = 2 * 60 * 60
@@ -63,7 +72,7 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(403, b"forbidden")
         path = self.path.split("?", 1)[0]
         if path == "/ping":
-            return self._send(200, b"feedcast")
+            return self._send(200, PING)
         if path == "/":
             return self._send(302, extra={"Location": "/reports/index.html"})
         if path == "/setup":
@@ -132,6 +141,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def make_server(port: int = PORT) -> HTTPServer:
     srv = HTTPServer(("127.0.0.1", port), Handler)
+    srv.daemon_threads = True  # one thread per request: an idle browser connection can't block the rest
     srv.last = time.monotonic()
     srv.token = secrets.token_urlsafe(24)
     return srv
@@ -146,12 +156,32 @@ def serve(srv: HTTPServer, idle_s: float = IDLE_S) -> None:
         srv.server_close()
 
 
-def server_up(port: int = PORT) -> bool:
+def _ping(port: int) -> bytes | None:
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/ping", timeout=0.5) as r:
-            return r.read() == b"feedcast"
+            return r.read()
     except OSError:
-        return False
+        return None
+
+
+def server_up(port: int = PORT) -> bool:
+    return _ping(port) == PING
+
+
+def stop_stale(port: int = PORT) -> None:
+    """A Feedcast server from an older version is on the port: stop it so a current one can start."""
+    got = _ping(port)
+    if not got or got == PING or not got.startswith(b"feedcast"):
+        return
+    try:
+        pid = int(config.path("serve.pid").read_text())
+        os.kill(pid, signal.SIGTERM)
+    except (OSError, ValueError):
+        return
+    for _ in range(20):
+        if _ping(port) is None:
+            return
+        time.sleep(0.1)
 
 
 def start_detached(port: int = PORT) -> None:
@@ -171,6 +201,8 @@ def ensure_server(port: int = PORT, up=None, start=None) -> bool:
     up, start = up or server_up, start or start_detached
     if up(port):
         return True
+    if up is server_up:
+        stop_stale(port)
     start(port)
     for _ in range(15):
         if up(port):
@@ -180,6 +212,7 @@ def ensure_server(port: int = PORT, up=None, start=None) -> bool:
 
 
 def cmd_serve(args) -> int:
+    stop_stale(args.port)
     if server_up(args.port):
         print(f"Already running at http://127.0.0.1:{args.port}/")
         return 0
@@ -188,6 +221,9 @@ def cmd_serve(args) -> int:
     except OSError as e:
         print(f"Can't listen on 127.0.0.1:{args.port}: {e.strerror or e}", file=sys.stderr)
         return 1
+    pid = config.path("serve.pid")
+    pid.parent.mkdir(parents=True, exist_ok=True)
+    pid.write_text(str(os.getpid()))
     print(f"Feedcast at http://127.0.0.1:{args.port}/ (stops after 2 h idle)", flush=True)
     try:
         serve(srv)
