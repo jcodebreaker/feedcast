@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Feedcast video</title>
+<!-- All people, posts, repos and papers in this scene are invented sample data. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=block">
+<style>
+:root{
+  --bg:#0c0d10; --surface:#15171b; --surface-2:#1d2025; --line:#262a30; --ink:#f2f2ef; --ink-2:#a9abb2; --ink-3:#71747c;
+  --accent:#ff6a40; --accent-ink:#ffffff; --link:#7aa2ff; --ok:#22b35a; --warn:#d97706;
+  --r:16px; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.9);
+  --sans:"Geist",-apple-system,"Helvetica Neue",Arial,sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{background:radial-gradient(900px 500px at 50% -10%,#1a1410,transparent 70%),var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;position:relative}
+.layer{position:absolute;inset:0;opacity:0}
+.cap{position:absolute;left:0;right:0;top:44px;text-align:center}
+.cap h2{font-size:44px;line-height:1.1;font-weight:600;letter-spacing:-.03em}
+.cap p{font-size:22px;color:var(--ink-2);margin-top:12px;letter-spacing:-.01em}
+.cap .acc{color:var(--accent)}
+.mono{font-family:var(--mono)}
+.av{width:32px;height:32px;border-radius:50%;flex:none;display:inline-grid;place-items:center;font:600 12px var(--sans);color:#fff;background:hsl(var(--h,220) 50% 46%)}
+.av.sm{width:26px;height:26px;font-size:10px}.av.lg{width:52px;height:52px;font-size:18px}
+.stack{display:flex}.stack .av{margin-left:-8px;box-shadow:0 0 0 2px var(--surface)}.stack .av:first-child{margin-left:0}
+
+/* beat 1: a generic social feed */
+.feedwin{position:absolute;left:340px;width:600px;top:178px;bottom:0;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 60px,#000 85%,transparent)}
+.feed{display:flex;flex-direction:column;gap:12px;padding-top:30px}
+.post{background:#16181c;border:1px solid #23262c;border-radius:12px;padding:14px 16px}
+.post .hd{display:flex;gap:10px;align-items:center}
+.post .hd b{font-size:14px;font-weight:600;display:block;line-height:1.2}
+.post .hd small{font-size:12px;color:var(--ink-3)}
+.post .tx{font-size:14.5px;margin:10px 0 0;color:#dcdcd8}
+.post .pv{margin-top:10px;border:1px solid #2a2d33;border-radius:10px;overflow:hidden;display:grid;grid-template-columns:120px 1fr;position:relative}
+.post .pv .th{height:64px;background:linear-gradient(135deg,#2b2f37,#1b1d22);display:grid;place-items:center;font:600 22px var(--mono);color:#6b6f78}
+.post .pv .pt{padding:9px 12px;font-size:13px;font-weight:500;line-height:1.3}
+.post .pv .pt small{display:block;font:500 11.5px var(--mono);color:var(--ink-3);margin-top:3px}
+.post .pv .tag{position:absolute;right:10px;top:9px;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);padding:3px 7px;border-radius:6px}
+.post .rx{font-size:12px;color:var(--ink-3);margin-top:10px}
+
+/* beat 2: setup */
+.setup{position:absolute;left:80px;right:80px;top:184px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:18px}
+.col{display:flex;flex-direction:column;gap:18px}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--shadow)}
+.pane header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.pane h3{font-size:19px;letter-spacing:-.02em;font-weight:600}
+.pane h4{margin:14px 0 8px;font:500 11.5px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.ok-pill{font:500 12px var(--mono);padding:5px 10px;border-radius:999px;white-space:nowrap;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-size:13.5px;font-weight:500}
+.chip i{font-style:normal;color:var(--ink-3)}
+.chip.add{background:transparent;border-style:dashed;color:var(--ink-2)}
+.li{display:flex;gap:14px;align-items:center}
+.li b{font-size:16px;display:block}.li .sub{color:var(--ink-2);font-size:13.5px}.li .m{font:500 12px var(--mono);color:var(--ink-3);margin-top:4px}
+.role{font:600 16px var(--sans);letter-spacing:-.01em;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:12px;min-height:46px}
+.caret{display:inline-block;width:2px;height:1.05em;background:var(--accent);vertical-align:-.18em;margin-left:1px}
+.ints{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.int{display:grid;grid-template-columns:minmax(0,1fr) 70px;gap:12px;align-items:center;padding:9px 12px 9px 14px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;font-weight:500}
+.int .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.int .w{height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden}
+.int .w i{display:block;height:100%;background:var(--accent);border-radius:9px}
+.schedrow{display:flex;align-items:center;gap:8px;margin-top:16px}
+.time{font:500 14px var(--mono);padding:8px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.btn{border:1px solid var(--line);background:var(--surface);padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px;white-space:nowrap;margin-left:auto}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.on{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+
+/* beat 3: reads timeline */
+.tl{position:absolute;left:140px;width:1000px;top:330px;height:4px;background:var(--surface-2);border-radius:4px}
+.tl .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:4px}
+.tl .hr{position:absolute;top:22px;transform:translateX(-50%);font:500 12px var(--mono);color:var(--ink-3)}
+.rd{position:absolute;top:2px;transform:translate(-50%,-50%)}
+.rd .d{width:22px;height:22px;border-radius:50%;border:2px solid var(--ink-3);background:var(--bg)}
+.rd .lb{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font:500 18px var(--mono);white-space:nowrap}
+.rd .n{position:absolute;top:26px;left:50%;transform:translateX(-50%);font:500 13px var(--mono);color:var(--ink-2);white-space:nowrap}
+.rd.pg .d{border-radius:6px}
+.head{position:absolute;top:2px;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 25%,transparent)}
+.counters{position:absolute;left:190px;right:190px;top:440px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ctr{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:var(--shadow)}
+.ctr b{display:block;font:600 52px/1 var(--sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.ctr span{font:500 13px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.chrome{position:absolute;left:0;right:0;top:600px;display:flex;justify-content:center;gap:10px}
+.pill{font:500 12.5px var(--mono);padding:6px 11px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.pill.strong{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* beat 4: filter */
+.colh{position:absolute;top:186px;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.colh b{color:var(--ink);font-weight:500}
+.row{position:absolute;height:46px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px;white-space:nowrap;overflow:hidden}
+.row .nm{font-weight:600}
+.row .sn{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.row .why{font:500 11px var(--mono);color:var(--ink-3);background:var(--surface-2);padding:3px 7px;border-radius:6px;flex:none}
+.row .tp{font:500 11px var(--mono);color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);padding:3px 7px;border-radius:6px;flex:none}
+.merged{position:absolute;left:470px;width:400px;top:214px;background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 55%,var(--line));border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:9px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 10%,transparent),var(--shadow)}
+.merged .top{display:flex;align-items:center;gap:10px}
+.merged .top b{font-size:14.5px;flex:1}
+.badge{font:600 11px var(--mono);color:var(--accent-ink);background:var(--accent);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.res{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 10px;border-radius:10px;background:color-mix(in srgb,var(--link) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--link) 18%,var(--line))}
+.res .k{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--link)}
+.res .rt{font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .rs{font:500 11px var(--mono);color:var(--ink-3)}
+
+/* beat 5: the evening page */
+.win{position:absolute;left:80px;right:80px;top:120px;height:640px;background:var(--bg);border:1px solid var(--line);border-radius:18px 18px 0 0;overflow:hidden;box-shadow:0 30px 80px -30px #000}
+.page{position:absolute;left:0;right:0;top:0}
+.ptop{height:52px;display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--line);gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.02em}
+.mark{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,var(--accent),#ffb02e,var(--accent));box-shadow:inset 0 0 0 5px var(--bg)}
+.reads{display:flex;gap:18px;margin:0 auto;font:500 12px var(--mono);color:var(--ink-3)}
+.reads span{display:flex;align-items:center;gap:7px}
+.reads b{color:var(--ink);font-weight:500}
+.reads i{width:44px;height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden}
+.reads i u{display:block;height:100%;background:var(--accent);border-radius:9px}
+.pin{padding:0 28px}
+.date{font:500 12px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin:26px 0 10px}
+.page h1{font-weight:600;font-size:30px;line-height:1.18;letter-spacing:-.03em;max-width:900px}
+.page h1 span{white-space:nowrap}
+.page h1 b{font-weight:600;background:linear-gradient(transparent 62%,color-mix(in srgb,var(--accent) 34%,transparent) 0)}
+.pills{display:flex;gap:8px;margin-top:16px}
+.tabs{display:flex;gap:6px;margin:16px 0 16px}
+.tab{border:1px solid var(--line);padding:7px 13px;border-radius:999px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.tab span{font:500 11px var(--mono);color:var(--ink-3);margin-left:4px}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tab.on span{color:inherit;opacity:.7}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.img{height:150px;background:var(--surface-2);overflow:hidden}
+.img.quote{display:flex;align-items:flex-end;padding:16px 18px;background:radial-gradient(120% 90% at 0% 0%,hsl(var(--h) 85% 62% / .55),transparent 60%),radial-gradient(90% 90% at 100% 100%,hsl(calc(var(--h) + 60) 85% 58% / .45),transparent 60%),var(--surface-2)}
+.img.quote p{font-size:15px;line-height:1.35;font-weight:500}
+.img.repo{padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(120% 120% at 100% 0%,hsl(var(--h) 80% 55% / .35),transparent 55%),#111317}
+.img.repo .o{font:500 15px var(--mono);color:var(--ink-3)}
+.img.repo .n{font:600 34px/1.05 var(--mono);letter-spacing:-.03em}
+.img.repo .d{font-size:14px;color:var(--ink-2);margin-top:8px}
+.img.repo .ci{font:500 13px/1.8 var(--mono);color:var(--ink-2);background:#0b0c0f;border:1px solid var(--line);border-radius:10px;padding:10px 14px}.ci .g{color:var(--ok)}.ci .r{color:var(--accent)}
+.img.repo .s{font:500 12.5px var(--mono);color:var(--ink-3);display:flex;gap:16px}
+.img.paper{background:#f3f1ea;color:#1b1c1f;padding:18px 22px;font-family:Georgia,serif}
+.img.paper small{font:500 10.5px var(--mono);color:#8a6d5a;letter-spacing:.06em}
+.img.paper b{display:block;font-size:20px;line-height:1.15;margin:8px 0 6px;font-weight:600}
+.img.paper span{font-size:11px;color:#6a6b70;display:block}
+.img.paper i{display:block;height:5px;background:#dedad0;border-radius:3px;margin-top:7px}
+.body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+.meta{display:flex;gap:8px;align-items:center}
+.topic{font:500 11px var(--mono);color:var(--ink-2);background:var(--surface-2);padding:3px 8px;border-radius:6px}
+.card h3{font-size:15.5px;line-height:1.3;font-weight:600;letter-spacing:-.015em}
+.card .wy{color:var(--ink-2);font-size:13.5px}
+.card footer{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:9px;border-top:1px solid var(--line);font-size:12.5px}
+.who{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25;font-weight:500}
+.who small{color:var(--ink-3);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat{font:500 11.5px var(--mono);color:var(--ink-3);white-space:nowrap}
+.open{font-weight:500;color:var(--link);white-space:nowrap}
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);margin-bottom:16px}
+.hero .img{height:auto;min-height:270px}
+.hero .body{padding:22px 24px 16px;gap:11px}
+.hero h3{font-size:23px;letter-spacing:-.025em;line-height:1.2}
+.hero .wy{font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+
+/* end card */
+.end{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.end .logo{font-size:64px;gap:22px;letter-spacing:-.04em}
+.end .mark{width:58px;height:58px;border-radius:17px;box-shadow:inset 0 0 0 13px var(--bg)}
+.end p{font-size:22px;color:var(--ink-2);margin-top:14px}
+.cmd{margin-top:38px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 26px;font:500 21px/1.75 var(--mono);box-shadow:var(--shadow)}
+.cmd div::before{content:"$ ";color:var(--accent)}
+</style></head>
+<body>
+
+<!-- 1 problem -->
+<section class="layer" id="L1">
+  <div class="cap"><h2 id="c1a">Your feed has real signal.</h2><p id="c1b">You're never there to catch it.</p></div>
+  <div class="feedwin"><div class="feed" id="feed"></div></div>
+</section>
+
+<!-- 2 setup -->
+<section class="layer" id="L2">
+  <div class="cap"><h2>Set it up once.</h2><p id="c2b">It learns what you care about from your code and profile.</p></div>
+  <div class="setup">
+    <div class="col">
+      <div class="pane" id="p2a">
+        <header><h3>Your work</h3><span class="ok-pill" id="ok1">6 repos found</span></header>
+        <div class="chips"><span class="chip" id="fold">~/code <i>×</i></span><span class="chip add">+ Add folder</span></div>
+      </div>
+      <div class="pane" id="p2b">
+        <header><h3>LinkedIn</h3><span class="ok-pill" id="ok2">Signed in in Chrome</span></header>
+        <div class="li"><span class="av lg" style="--h:200">AR</span><div><b>Alex Rivera</b><div class="sub">AI engineer at a small agent startup</div><div class="m">4 roles · 6 skills</div></div></div>
+      </div>
+    </div>
+    <div class="pane" id="p2c">
+      <header><h3>What you care about</h3></header>
+      <div class="role" id="role"></div>
+      <ul class="ints" id="ints" style="list-style:none;padding:0"></ul>
+      <h4 id="nvh">Never show</h4>
+      <div class="chips" id="nv"><span class="chip">crypto <i>×</i></span><span class="chip">hiring takes <i>×</i></span></div>
+      <div class="schedrow" id="sch"><span class="time">09:00</span><span class="time">13:30</span><span class="time">18:45</span><span class="btn primary" id="go">Turn on daily reads</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 reads -->
+<section class="layer" id="L3">
+  <div class="cap"><h2>Reads at <span class="mono acc">09:00 · 13:30 · 18:45</span></h2><p>In your own Chrome. Never clicks, likes or follows.</p></div>
+  <div class="tl" id="tl"><div class="fill" id="tlf"></div></div>
+  <div class="counters">
+    <div class="ctr"><b id="n1">0</b><span>posts read</span></div>
+    <div class="ctr"><b id="n2">0</b><span>ads dropped</span></div>
+    <div class="ctr"><b id="n3">0</b><span>repeats merged</span></div>
+  </div>
+  <div class="chrome" id="chips3"><span class="pill">read-only</span><span class="pill">human pace</span><span class="pill">stops on any security check</span></div>
+</section>
+
+<!-- 4 filter -->
+<section class="layer" id="L4">
+  <div class="cap"><h2>Keeps only what matches you.</h2><p id="c4b">The same repo from three people becomes one card.</p></div>
+  <div class="colh" style="left:80px">Read</div>
+  <div class="colh" style="left:470px"><b>Kept for you</b></div>
+  <div class="colh" style="left:900px">Skipped</div>
+  <div id="rows"></div>
+  <div class="merged" id="mg">
+    <div class="top"><span class="stack"><span class="av sm" style="--h:20">TK</span><span class="av sm" style="--h:330">MO</span><span class="av sm" style="--h:150">PR</span></span><b>agent-replay for eval regressions in CI</b><span class="badge">shared by 3</span></div>
+    <div class="res"><span class="k">Repo</span><span class="rt">oyelaran-labs/agent-replay</span><span class="rs">github.com</span></div>
+  </div>
+</section>
+
+<!-- 5 evening page -->
+<section class="layer" id="L5">
+  <div class="cap" style="top:40px"><h2 style="font-size:38px">One visual page, every evening.</h2></div>
+  <div class="win" id="win"><div class="page" id="page">
+    <div class="ptop"><span class="logo"><span class="mark"></span>Feedcast</span>
+      <div class="reads"><span><b>09:00</b><i><u id="r1"></u></i></span><span><b>13:30</b><i><u id="r2"></u></i></span><span><b>18:45</b><i><u id="r3"></u></i></span></div>
+      <span class="pill">Setup</span></div>
+    <div class="pin">
+      <div class="date" id="dt">Friday evening · 30 October</div>
+      <h1 id="h1"></h1>
+      <div class="pills" id="pl"><span class="pill strong">6 for you</span><span class="pill">91 posts read</span><span class="pill">68 skipped</span><span class="pill">14 ads dropped</span></div>
+      <div class="tabs" id="tb"><span class="tab on">All <span>6</span></span><span class="tab">Agent evals <span>3</span></span><span class="tab">MCP tool search <span>2</span></span><span class="tab">pptx layout <span>1</span></span></div>
+      <article class="card hero" id="hero">
+        <div class="img repo" style="--h:18"><div><div class="o">oyelaran-labs /</div><div class="n">agent-replay</div><div class="d">Replay recorded agent runs. Fail CI on regressions.</div></div><div class="ci"><div><span class="g">✓</span> 397 conversations replayed</div><div><span class="r">✗</span> 3 tool-call regressions</div><div><span class="r">✗</span> accuracy 94.1% → 90.8% · deploy blocked</div></div><div class="s"><span>★ 2.1k</span><span>Python</span><span>MIT</span></div></div>
+        <div class="body">
+          <div class="meta"><span class="topic">Agent evals</span><span class="badge">shared by 3</span></div>
+          <h3>agent-replay turns 400 recorded conversations into a CI gate that fails on a 3% accuracy drop</h3>
+          <p class="wy">Three people you follow use it to catch tool-call regressions before deploy, at about $11 per run.</p>
+          <div class="res"><span class="k">Repo</span><span class="rt">oyelaran-labs/agent-replay</span><span class="rs">github.com</span></div>
+          <footer><span class="stack"><span class="av sm" style="--h:20">TK</span><span class="av sm" style="--h:330">MO</span><span class="av sm" style="--h:150">PR</span></span><span class="who">Tomasz Kowal, Mariana Oyelaran<small>and Priya Raghunathan</small></span><span class="stat">1,240 ♥</span><span class="open">Open ↗</span></footer>
+        </div>
+      </article>
+      <div class="grid">
+        <article class="card" id="g1">
+          <div class="img quote" style="--h:200"><p>“212 tools, 9 MCP servers, one search step. Wrong-tool rate fell from 7% to under 1%.”</p></div>
+          <div class="body"><div class="meta"><span class="topic">MCP tool search</span></div>
+            <h3>One search step in front of 212 tools cut wrong-tool calls to under 1%</h3>
+            <div class="res"><span class="k">Article</span><span class="rt">212 tools, one search step</span><span class="rs">weiming.engineering</span></div>
+            <footer><span class="av sm" style="--h:260">DW</span><span class="who">Deng Weiming<small>Staff engineer</small></span><span class="stat">341 ♥</span></footer></div>
+        </article>
+        <article class="card" id="g2">
+          <div class="img paper"><small>ARXIV · 2610.01234</small><b>When Does the Judge Disagree?</b><span>A. Brandt, K. Osei, L. Varga</span><i></i><i style="width:86%"></i><i style="width:64%"></i></div>
+          <div class="body"><div class="meta"><span class="topic">Agent evals</span></div>
+            <h3>LLM judges disagree with humans 31% of the time on tool-use grading</h3>
+            <div class="res"><span class="k">Paper</span><span class="rt">When Does the Judge Disagree?</span><span class="rs">arxiv.org</span></div>
+            <footer><span class="av sm" style="--h:100">AB</span><span class="who">Anneliese Brandt<small>Researcher</small></span><span class="stat">144 ♥</span></footer></div>
+        </article>
+        <article class="card" id="g3">
+          <div class="img repo" style="--h:280;padding:18px 20px"><div><div class="o">lindqvist /</div><div class="n" style="font-size:28px">slidefit</div><div class="d">Fit text to the box before you render a pptx.</div></div><div class="s"><span>★ 640</span><span>TypeScript</span></div></div>
+          <div class="body"><div class="meta"><span class="topic">pptx layout</span></div>
+            <h3>slidefit 0.3 sizes text to fit before the pptx is rendered</h3>
+            <div class="res"><span class="k">Repo</span><span class="rt">lindqvist/slidefit</span><span class="rs">github.com</span></div>
+            <footer><span class="av sm" style="--h:50">AL</span><span class="who">Astrid Lindqvist<small>Maintainer of slidefit</small></span><span class="stat">164 ♥</span></footer></div>
+        </article>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- end -->
+<section class="layer end" id="L6">
+  <div class="logo" id="elg"><span class="mark"></span>Feedcast</div>
+  <p id="etg">Your LinkedIn feed, read for you. One page each evening.</p>
+  <div class="cmd" id="ecmd"><div>uv tool install git+https://github.com/jcodebreaker/feedcast</div><div>feedcast setup</div></div>
+</section>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const cl = (x) => Math.max(0, Math.min(1, x));
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const ease = (x) => 1 - Math.pow(1 - x, 3);
+const inout = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const win = (t, a, b, f = .45) => Math.min(ease(seg(t, a, a + f)), 1 - seg(t, b - f, b));
+const show = (el, o, dy = 0) => { el.style.opacity = o; el.style.transform = `translateY(${(1 - o) * dy}px)`; };
+const lerp = (a, b, x) => a + (b - a) * x;
+const ini = (n) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
+const hue = (n) => [...n].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
+
+/* ---------- 1 feed (invented posts from fixtures/capture-sample.json) ---------- */
+const FEED = [
+  ['Carlos Nwosu', 'Founder · 5h', "Vibe coding is dead. Here's what's next.", null, '1,900 reactions · 410 comments'],
+  ['Tomasz Kowal', 'ML engineer · 6h', 'Everyone should look at agent-replay for eval regressions in CI.', ['{ }', 'oyelaran-labs/agent-replay', 'github.com', 'repo'], '210 reactions · 15 comments'],
+  ['Acme AI', 'Promoted', 'Scale your sales team with AI SDRs.', ['AD', 'Book a demo', 'acme.example', null], ''],
+  ['Hélène Marchetti', 'Eng manager · 8h', "We replaced leetcode with 'write an eval' in interviews.", null, '520 reactions · 90 comments'],
+  ['Samir Khoury', 'Open source · 1d', '1,100 agent eval cases, grouped by failure mode, MIT licensed.', ['{ }', 'khoury-ai/agent-failure-cases', 'github.com', 'repo'], '388 reactions · 31 comments'],
+  ['Yusuf Adebayo', 'On-device ML · 1d', 'Quantisation regressions nobody benchmarks.', null, '97 reactions · 8 comments'],
+  ['Anneliese Brandt', 'Researcher · 1d', 'New paper: LLM judges disagree with humans 31% of the time on tool use grading.', ['PDF', 'When Does the Judge Disagree?', 'arxiv.org', 'paper'], '144 reactions · 22 comments'],
+  ['Ines Castellanos', 'Security engineer · 2d', 'MCP auth is still unsolved: per-user tokens vs server-wide credentials. Link in comments.', null, '260 reactions · 48 comments'],
+  ['Priya Raghunathan', 'Applied scientist · 2d', 'Three retrieved examples beat our 2,400-token rule list: 86% vs 81%.', ['{ }', 'priya-r / few-shot-vs-rules', 'gist.github.com', 'gist'], '402 reactions · 27 comments'],
+];
+$('feed').innerHTML = FEED.map(([n, h, tx, pv, rx], i) => `<div class="post" id="po${i}"><div class="hd"><span class="av" style="--h:${hue(n)}">${ini(n)}</span><div><b>${n}</b><small>${h}</small></div></div><p class="tx">${tx}</p>${pv ? `<div class="pv" id="pv${i}"><div class="th">${pv[0]}</div><div class="pt">${pv[1]}<small>${pv[2]}</small></div>${pv[3] ? `<span class="tag" id="tg${i}">${pv[3]}</span>` : ''}</div>` : ''}${rx ? `<div class="rx">${rx}</div>` : ''}</div>`).join('');
+
+/* ---------- 2 setup ---------- */
+const ROLE = 'AI engineer: agents, MCP, evals; TypeScript, Python';
+const INTS = [['agent evals and regression testing', .9], ['MCP tool search', .9], ['LLM judges and grading', .75], ['pptx layout', .7], ['open eval datasets', .6], ['few-shot vs rule prompts', .45]];
+$('ints').innerHTML = INTS.map(([n], i) => `<li class="int" id="in${i}"><span class="t">${n}</span><span class="w"><i id="iw${i}"></i></span></li>`).join('');
+
+/* ---------- 3 timeline: 07:00 → 21:00 ---------- */
+const X = (h) => ((h - 7) / 14) * 1000;
+const READS = [[9, '09:00', [36, 5, 3]], [13.5, '13:30', [61, 9, 6]], [18.75, '18:45', [91, 14, 9]]];
+let tlh = '';
+READS.forEach(([h, lb, c], i) => { tlh += `<div class="rd" id="rd${i}" style="left:${X(h)}px"><div class="lb">${lb}</div><div class="d" id="rdd${i}"></div><div class="n" id="rdn${i}">${[36, 25, 30][i]} posts</div></div>`; });
+tlh += `<div class="rd pg" id="rdp" style="left:${X(19.5)}px"><div class="lb" style="font-size:13px;color:var(--ink-2);left:-11px;transform:none;bottom:-34px">19:30 page</div><div class="d" id="rddp"></div></div><div class="head" id="hd"></div>`;
+$('tl').insertAdjacentHTML('beforeend', tlh);
+
+/* ---------- 4 filter rows ---------- */
+// [name, snippet, kept?, tag, mergeGroup]
+const ROWS = [
+  ['Carlos Nwosu', 'Vibe coding is dead.', 0, 'no match'],
+  ['Tomasz Kowal', 'Look at agent-replay for eval regressions', 1, 'agent evals', 1],
+  ['Acme AI', 'Scale your sales team with AI SDRs.', 0, 'ad'],
+  ['Mariana Oyelaran', 'agent-replay 1.0: we fail deploys on a 3% drop', 1, 'agent evals', 1],
+  ['Hélène Marchetti', "Replaced leetcode with 'write an eval'", 0, 'hiring takes'],
+  ['Deng Weiming', '212 tools, 9 MCP servers, one search step', 1, 'MCP tool search'],
+  ['Priya Raghunathan', 'We gate every PR with agent-replay now', 1, 'agent evals', 1],
+  ['Yusuf Adebayo', 'Quantisation regressions nobody benchmarks.', 0, 'no match'],
+  ['Anneliese Brandt', 'LLM judges disagree with humans 31% of the time', 1, 'agent evals'],
+];
+let k = 0, s = 0;
+ROWS.forEach((r) => { r.slot = r[2] ? k++ : s++; });
+$('rows').innerHTML = ROWS.map(([n, sn, kept, tag], i) => `<div class="row" id="rw${i}"><span class="av sm" style="--h:${hue(n)}">${ini(n)}</span><span class="nm">${n}</span><span class="sn">${sn}</span><span class="${kept ? 'tp' : 'why'}" id="rt${i}" style="opacity:0">${tag}</span></div>`).join('');
+
+/* ---------- 5 headline ---------- */
+const H1 = 'A focused feed tonight. Eval gating went mainstream: <b>agent-replay was shared by 3</b> people you follow, and one search step cut wrong-tool calls to <b>under 1%</b>.';
+let wi = 0;
+$('h1').innerHTML = H1.split(/(<b>.*?<\/b>)/).map((part) => {
+  const b = part.startsWith('<b>');
+  const words = part.replace(/<\/?b>/g, '').split(' ').filter(Boolean).map((w) => `<span id="w${wi++}">${w}</span>`).join(' ');
+  return b ? `<b>${words}</b>` : words;
+}).reduce((acc, x) => acc + (acc && !/^<span id="w\d+">[.,:]/.test(x) ? ' ' : '') + x, '');
+const H1W = Array.from({ length: wi });
+
+/* ---------- timeline (seconds) ---------- */
+const B1 = [0, 6.2], B2 = [6, 14.2], B3 = [14, 22.2], B4 = [22, 30.2], B5 = [30, 37.6], B6 = 37.4;
+window.DURATION = 40;
+
+window.render = (t) => {
+  // 1 problem: the feed scrolls by; shared links light up as they pass
+  $('L1').style.opacity = win(t, B1[0] - 1, B1[1]);
+  show($('c1a'), ease(seg(t, .2, 1.0)), 16);
+  show($('c1b'), ease(seg(t, 1.8, 2.6)), 10);
+  const feedH = $('feed').offsetHeight;
+  const sy = -inout(seg(t, .4, 6.2)) * (feedH - 420);
+  $('feed').style.transform = `translateY(${sy}px)`;
+  FEED.forEach((p, i) => {
+    if (!p[3] || !p[3][3]) return;
+    const el = $('po' + i), pv = $('pv' + i);
+    const cy = el.offsetTop + el.offsetHeight / 2 + sy;
+    const h = ease(seg(-cy, -470, -360));
+    pv.style.borderColor = `color-mix(in srgb, var(--accent) ${h * 100}%, #2a2d33)`;
+    pv.style.boxShadow = `0 0 0 ${h * 4}px color-mix(in srgb, var(--accent) 18%, transparent)`;
+    $('tg' + i).style.opacity = h;
+  });
+
+  // 2 setup
+  $('L2').style.opacity = win(t, ...B2);
+  show($('c2b'), ease(seg(t, B2[0] + .6, B2[0] + 1.3)), 10);
+  show($('p2a'), ease(seg(t, 6.3, 6.8)), 16);
+  show($('ok1'), ease(seg(t, 7.2, 7.5)));
+  show($('p2b'), ease(seg(t, 7.0, 7.5)), 16);
+  show($('ok2'), ease(seg(t, 7.9, 8.2)));
+  show($('p2c'), ease(seg(t, 8.0, 8.5)), 16);
+  const rl = Math.floor(seg(t, 8.6, 9.9) * ROLE.length);
+  $('role').innerHTML = ROLE.slice(0, rl) + (t > 8.4 && rl < ROLE.length ? '<i class="caret"></i>' : '');
+  INTS.forEach(([, w], i) => { const a = 9.9 + i * .22; show($('in' + i), ease(seg(t, a, a + .35)), 8); $('iw' + i).style.width = `${w * 100 * ease(seg(t, a + .2, a + .9))}%`; });
+  show($('nvh'), ease(seg(t, 11.5, 11.9))); show($('nv'), ease(seg(t, 11.6, 12.0)), 6);
+  show($('sch'), ease(seg(t, 11.9, 12.3)), 6);
+  const press = seg(t, 12.9, 13.2);
+  const go = $('go');
+  go.style.transform = `scale(${1 - .06 * Math.sin(press * Math.PI)})`;
+  if (t >= 13.05) { go.className = 'btn on'; go.textContent = 'Daily reads on ✓'; } else { go.className = 'btn primary'; go.textContent = 'Turn on daily reads'; }
+
+  // 3 reads
+  $('L3').style.opacity = win(t, ...B3);
+  const pr = seg(t, 14.6, 20.8);
+  const hx = pr * X(20.2);
+  $('tlf').style.width = `${hx}px`;
+  $('hd').style.left = `${hx}px`; $('hd').style.opacity = pr > 0 && pr < 1 ? 1 : pr >= 1 ? 1 - seg(t, 20.8, 21.2) : 0;
+  let cnt = [0, 0, 0];
+  READS.forEach(([h, , c], i) => {
+    const at = 14.6 + (X(h) / X(20.2)) * 6.2;
+    const f = ease(seg(t, at - .05, at + .25));
+    const d = $('rdd' + i);
+    d.style.background = `color-mix(in srgb, var(--accent) ${f * 100}%, var(--bg))`;
+    d.style.borderColor = f > .01 ? 'var(--accent)' : 'var(--ink-3)';
+    d.style.boxShadow = `0 0 0 ${8 * Math.sin(seg(t, at, at + .6) * Math.PI)}px color-mix(in srgb, var(--accent) 25%, transparent)`;
+    $('rdn' + i).style.opacity = ease(seg(t, at + .1, at + .5));
+    const prev = i ? READS[i - 1][2] : [0, 0, 0];
+    const x = ease(seg(t, at, at + 1.1));
+    if (t >= at) cnt = c.map((v, j) => Math.round(lerp(prev[j], v, x)));
+  });
+  const pg = ease(seg(t, 20.5, 20.9));
+  $('rddp').style.background = `color-mix(in srgb, var(--ink) ${pg * 100}%, var(--bg))`;
+  $('rddp').style.borderColor = pg > .01 ? 'var(--ink)' : 'var(--ink-3)';
+  $('n1').textContent = cnt[0]; $('n2').textContent = cnt[1]; $('n3').textContent = cnt[2];
+  show($('chips3'), ease(seg(t, 15.4, 16.0)), 8);
+
+  // 4 filter
+  $('L4').style.opacity = win(t, ...B4);
+  show($('c4b'), ease(seg(t, 26.6, 27.2)), 8);
+  const ROW0 = 214, STEP = 54;
+  const mg = ease(seg(t, 27.0, 27.7));
+  ROWS.forEach((r, i) => {
+    const el = $('rw' + i);
+    const enter = ease(seg(t, 22.2 + i * .07, 22.6 + i * .07));
+    const at = 23.0 + i * .42;
+    const m = inout(seg(t, at, at + .55));
+    let x = lerp(80, r[2] ? 470 : 900, m), y = lerp(ROW0 + i * STEP, ROW0 + r.slot * STEP, m);
+    const w = lerp(360, r[2] ? 400 : 300, m);
+    let o = enter * (r[2] ? 1 : lerp(1, .5, m));
+    if (r[2]) {
+      if (r[4]) { y = lerp(y, ROW0 + 6, mg); o *= 1 - seg(t, 27.2, 27.6); }
+      else { const after = ROWS.filter((q, j) => q[2] && !q[4] && j < i).length; y = lerp(y, ROW0 + $('mg').offsetHeight + 8 + after * STEP, mg); }
+    }
+    el.style.left = `${x}px`; el.style.top = `${y}px`; el.style.width = `${w}px`; el.style.opacity = o;
+    el.style.transform = `translateX(${(1 - enter) * -20}px)`;
+    $('rt' + i).style.opacity = ease(seg(t, at + .35, at + .6));
+    el.style.textDecoration = 'none';
+  });
+  const mo = ease(seg(t, 27.3, 27.8));
+  $('mg').style.opacity = mo; $('mg').style.transform = `scale(${lerp(.94, 1, mo)})`;
+
+  // 5 evening page
+  $('L5').style.opacity = win(t, ...B5);
+  const wv = ease(seg(t, 30.1, 30.8));
+  $('win').style.transform = `translateY(${(1 - wv) * 80}px)`;
+  [['r1', 30.6], ['r2', 30.8], ['r3', 31.0]].forEach(([id, a]) => { $(id).style.width = `${100 * ease(seg(t, a, a + .5))}%`; });
+  show($('dt'), ease(seg(t, 30.9, 31.3)), 6);
+  H1W.forEach((_, i) => { const a = 31.1 + i * .045; $('w' + i).style.opacity = ease(seg(t, a, a + .3)); });
+  $('h1').querySelectorAll('b').forEach((b) => { b.style.opacity = b.firstElementChild.style.opacity; });
+  show($('pl'), ease(seg(t, 32.6, 33.0)), 6);
+  show($('tb'), ease(seg(t, 32.9, 33.3)), 6);
+  show($('hero'), ease(seg(t, 33.3, 33.9)), 20);
+  ['g1', 'g2', 'g3'].forEach((g, i) => show($(g), ease(seg(t, 34.3 + i * .25, 34.9 + i * .25)), 24));
+  $('page').style.transform = `translateY(${-inout(seg(t, 34.4, 36.4)) * 300}px)`;
+
+  // end card
+  $('L6').style.opacity = ease(seg(t, B6, B6 + .6));
+  show($('elg'), ease(seg(t, B6 + .1, B6 + .7)), 12);
+  show($('etg'), ease(seg(t, B6 + .5, B6 + 1.1)), 10);
+  show($('ecmd'), ease(seg(t, B6 + .9, B6 + 1.5)), 12);
+};
+window.render(0);
+</script>
+</body></html>

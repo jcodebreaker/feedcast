@@ -1,0 +1,1 @@
+{"_note": "INVENTED SAMPLE DATA.", "description": "Retrieve three examples, build the prompt, run the eval.", "updated_at": "2026-10-29T08:00:00Z", "files": {"example-retrieval-prompt.py": {"filename": "example-retrieval-prompt.py", "language": "Python"}}}

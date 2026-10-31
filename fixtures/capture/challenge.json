@@ -1,0 +1,25 @@
+{
+  "_note": "INVENTED SAMPLE DATA. What the agent writes when LinkedIn shows a security check.",
+  "run_started_at": "2026-10-30T13:30:05+01:00",
+  "run_ended_at": "2026-10-30T13:30:41+01:00",
+  "status": "aborted_challenge",
+  "notes": "Security check page after first scroll",
+  "posts": [
+    {
+      "urn": "urn:li:activity:7251000000000000901",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000901",
+      "author": "Ines Halvorsen",
+      "author_headline": "ML engineer",
+      "text": "Small eval harness for tool-calling agents, MIT licensed. Link in comments.",
+      "posted_age": "2h",
+      "reactions": "312",
+      "comments": 18,
+      "reposts": 4,
+      "is_suggested": true,
+      "is_promoted": false,
+      "position": 1,
+      "links": [],
+      "link_in_hidden_comment": true
+    }
+  ]
+}

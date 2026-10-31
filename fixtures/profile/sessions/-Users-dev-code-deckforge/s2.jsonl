@@ -1,0 +1,3 @@
+{"type": "summary", "summary": "Fit text boxes before pptx render", "leafUuid": "x"}
+not json at all
+{"type": "user", "message": {"role": "user", "content": "Make the layout check fail on overflowing text in slide titles"}}

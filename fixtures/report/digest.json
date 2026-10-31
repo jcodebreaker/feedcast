@@ -1,0 +1,17 @@
+{
+  "_note": "INVENTED fake Opus digest reply for fixtures/report/day.json.",
+  "summary": "Agent evals in CI, three days running now, and **three people shared the same harness repo**. One tool-search write-up brought **real numbers on MCP**. Quiet on slide layout: **one small library**.",
+  "groups": [
+    {"name": "Agent Evals", "line": "building for 3 days", "keys": ["urn:li:activity:7300000000000000001", "urn:li:activity:7300000000000000004"]},
+    {"name": "Tools & MCP", "line": "Clear signal on tool search", "keys": ["urn:li:activity:7300000000000000006", "urn:li:activity:7300000000000000007", "urn:li:activity:999"]}
+  ],
+  "items": [
+    {"key": "urn:li:activity:7300000000000000001", "takeaway": "Teams are failing deploys on agent eval regressions, and this is the harness they point at.", "why": "Three people shared it today; the recording format is plain JSONL, so it works outside Python."},
+    {"key": "urn:li:activity:7300000000000000004", "takeaway": "Model-as-judge is weakest exactly on tool use.", "why": "The appendix rubric brought disagreement down a lot."},
+    {"key": "urn:li:activity:7300000000000000005", "takeaway": "A free starter set of eval cases, sorted by how agents fail.", "why": "\"Stops too early\" and \"ignores tool error\" are the two biggest buckets."},
+    {"key": "urn:li:activity:7300000000000000006", "takeaway": "Keep your tools and let the client search them, instead of merging them.", "why": "Wrong-tool picks fell to under 1% across 212 tools."},
+    {"key": "urn:li:activity:7300000000000000007", "takeaway": "A long thread on MCP auth: per-user tokens or one server credential.", "why": "The clearest write-up of the trade-off so far."},
+    {"key": "urn:li:activity:7300000000000000008", "takeaway": "Fit text up front instead of catching overflow afterwards.", "why": "Sits on python-pptx. Early, v0.3."}
+  ],
+  "open_three": ["urn:li:activity:7300000000000000001", "urn:li:activity:7300000000000000006", "urn:li:activity:7300000000000000004"]
+}

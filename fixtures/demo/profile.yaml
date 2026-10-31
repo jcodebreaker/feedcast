@@ -1,0 +1,11 @@
+# INVENTED SAMPLE PROFILE for scripts/demo.py.
+generated_at: "2026-10-30T02:00:00Z"
+role: "AI engineer: agents, MCP, evals; TypeScript, Python"
+stack: [TypeScript, Python, MCP, SQLite]
+interests:
+  - {topic: agent evals and regression testing, weight: 0.9, auto: true}
+  - {topic: MCP tool search, weight: 0.9, auto: true}
+  - {topic: pptx layout, weight: 0.7, auto: true}
+not_interested: ["hiring takes"]
+pins: []
+mutes: [crypto]

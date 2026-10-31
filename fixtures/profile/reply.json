@@ -1,0 +1,7 @@
+{"role": "AI engineer: agents and evals; TypeScript, Python",
+ "active_projects": [{"name": "nova", "about": "MODEL-PROJECT-SHOULD-BE-DROPPED"}],
+ "stack": ["Python", "TypeScript"],
+ "interests": [{"topic": "agent evals and regression tests", "weight": 0.9, "project": "nova"},
+               {"topic": "pptx layout", "weight": 1.7},
+               {"topic": "MY HAND TOPIC", "weight": 0.2}],
+ "not_interested": ["hiring takes"]}

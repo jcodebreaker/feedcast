@@ -1,0 +1,11 @@
+{
+  "_note": "INVENTED SAMPLE DATA. A loose agent reply: string counts, a bad link, a post with no text.",
+  "run_started_at": "2026-10-30T18:45:10+01:00",
+  "status": "ok",
+  "notes": "",
+  "posts": [
+    {"urn": "urn:li:activity:7251000000000000801", "author": "Tomas Achterberg", "text": "We open-sourced our trace viewer for agent runs.", "reactions": "1.4K", "comments": "37", "links": [{"url": "https://github.com/example-org/trace-viewer", "source": "preview", "title": "trace-viewer"}, {"url": "javascript:alert(1)", "source": "body"}]},
+    {"urn": "not-a-urn", "author": "Priya Raman", "text": "Paper: retrieval for long tool lists.", "links": [{"url": "https://arxiv.org/abs/2610.00001", "source": "body", "title": null}]},
+    {"author": "Nobody", "text": ""}
+  ]
+}

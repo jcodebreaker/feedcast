@@ -1,0 +1,257 @@
+{
+  "_note": "INVENTED SAMPLE DATA. People, posts, repos and papers are fictional.",
+  "run_started_at": "2026-10-30T09:00:02+01:00",
+  "run_ended_at": "2026-10-30T09:04:31+01:00",
+  "status": "ok",
+  "notes": "sample",
+  "posts": [
+    {
+      "urn": "urn:li:activity:7251000000000000001",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000001",
+      "author": "Mariana Oyelaran",
+      "author_headline": "Eval lead",
+      "author_avatar": "https://media.licdn.com/dms/image/sample-avatar-1",
+      "image": "https://media.licdn.com/dms/image/sample-post-1",
+      "author_url": "https://www.linkedin.com/in/mariana-oyelaran-example/?miniProfileUrn=x",
+      "text": "We now fail deploys on a 3% drop in tool-call accuracy. 400 recorded conversations, $11 per run. Here's the harness we use.",
+      "posted_age": "3h",
+      "reactions": 1240,
+      "comments": 54,
+      "reposts": 12,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 1,
+      "links": [
+        {
+          "url": "https://lnkd.in/eX7qPz",
+          "source": "body",
+          "title": null
+        },
+        {
+          "url": "https://oyelaran.dev/fail-deploys",
+          "source": "preview",
+          "title": "Why we fail deploys on a 3% drop in tool-call accuracy"
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000002",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000002",
+      "author": "Carlos Nwosu",
+      "author_headline": "Founder",
+      "text": "Vibe coding is dead. Here's what's next.",
+      "posted_age": "5h",
+      "reactions": 1900,
+      "comments": 410,
+      "reposts": 80,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 2,
+      "links": [],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000003",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000003",
+      "author": "Deng Weiming",
+      "author_headline": "Staff engineer",
+      "text": "212 tools, 9 MCP servers, one search step. Wrong-tool rate fell from 7% to under 1%.",
+      "posted_age": "1d",
+      "reactions": 341,
+      "comments": 40,
+      "reposts": 9,
+      "is_suggested": true,
+      "is_promoted": false,
+      "position": 3,
+      "links": [
+        {
+          "url": "https://weiming.engineering/tool-search",
+          "source": "preview",
+          "title": "212 tools, 9 MCP servers, one search step"
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000004",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000004",
+      "author": "Acme AI",
+      "author_headline": "Promoted",
+      "text": "Scale your sales team with AI SDRs.",
+      "posted_age": "",
+      "reactions": 0,
+      "comments": 0,
+      "reposts": 0,
+      "is_suggested": false,
+      "is_promoted": true,
+      "position": 4,
+      "links": [
+        {
+          "url": "https://acme.example/sdr",
+          "source": "preview",
+          "title": null
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000005",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000005",
+      "author": "Astrid Lindqvist",
+      "author_headline": "Maintainer of slidefit",
+      "text": "Shipped slidefit 0.3: text that fits the box before you render a pptx.",
+      "posted_age": "2d",
+      "reactions": 164,
+      "comments": 12,
+      "reposts": 5,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 5,
+      "links": [
+        {
+          "url": "https://lnkd.in/b7Rk2a",
+          "source": "body",
+          "title": null
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000006",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000006",
+      "author": "Hélène Marchetti",
+      "author_headline": "Eng manager",
+      "text": "We replaced leetcode with 'write an eval' in interviews.",
+      "posted_age": "8h",
+      "reactions": 520,
+      "comments": 90,
+      "reposts": 20,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 6,
+      "links": [],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000007",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000007",
+      "author": "Tomasz Kowal",
+      "author_headline": "ML engineer",
+      "text": "Everyone should look at agent-replay for eval regressions in CI.",
+      "posted_age": "6h",
+      "reactions": 210,
+      "comments": 15,
+      "reposts": 4,
+      "is_suggested": true,
+      "is_promoted": false,
+      "position": 7,
+      "links": [
+        {
+          "url": "https://github.com/oyelaran-labs/agent-replay",
+          "source": "body",
+          "title": null
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000008",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000008",
+      "author": "Anneliese Brandt",
+      "author_headline": "Researcher",
+      "text": "New paper: LLM judges disagree with humans 31% of the time on tool use grading.",
+      "posted_age": "1d",
+      "reactions": 144,
+      "comments": 22,
+      "reposts": 6,
+      "is_suggested": true,
+      "is_promoted": false,
+      "position": 8,
+      "links": [
+        {
+          "url": "https://arxiv.org/abs/2610.01234",
+          "source": "preview",
+          "title": "When Does the Judge Disagree?"
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000009",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000009",
+      "author": "Samir Khoury",
+      "author_headline": "Open source",
+      "text": "1,100 agent eval cases, grouped by failure mode, MIT licensed.",
+      "posted_age": "4h",
+      "reactions": 188,
+      "comments": 10,
+      "reposts": 7,
+      "is_suggested": true,
+      "is_promoted": false,
+      "position": 9,
+      "links": [
+        {
+          "url": "https://github.com/khoury-ai/agent-failure-cases",
+          "source": "body",
+          "title": null
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000010",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000010",
+      "author": "Ines Castellanos",
+      "author_headline": "Security engineer",
+      "text": "MCP auth is still unsolved: per-user tokens vs server-wide credentials. Link in comments.",
+      "posted_age": "1d",
+      "reactions": 156,
+      "comments": 47,
+      "reposts": 3,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 10,
+      "links": [],
+      "link_in_hidden_comment": true
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000011",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000011",
+      "author": "Priya Raghunathan",
+      "author_headline": "Applied scientist",
+      "text": "Three retrieved examples beat our 2,400-token rule list: 86% vs 81%.",
+      "posted_age": "12h",
+      "reactions": 488,
+      "comments": 54,
+      "reposts": 11,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 11,
+      "links": [
+        {
+          "url": "https://gist.github.com/priya-r/abc123",
+          "source": "first_comment",
+          "title": null
+        }
+      ],
+      "link_in_hidden_comment": false
+    },
+    {
+      "urn": "urn:li:activity:7251000000000000012",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7251000000000000012",
+      "author": "Yusuf Adebayo",
+      "author_headline": "On-device ML",
+      "text": "Quantisation regressions nobody benchmarks.",
+      "posted_age": "9h",
+      "reactions": 95,
+      "comments": 8,
+      "reposts": 1,
+      "is_suggested": false,
+      "is_promoted": false,
+      "position": 12,
+      "links": [],
+      "link_in_hidden_comment": false
+    }
+  ]
+}

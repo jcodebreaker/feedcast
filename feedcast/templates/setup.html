@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="feedcast-token" content="$token">
+<title>Feedcast · Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+$css
+</style>
+</head>
+<body class="setup" data-running="$running">
+$body
+<p class="note" id="note" role="status" aria-live="polite" hidden></p>
+<script>
+// Every change is one POST to /api/<name> with this server's token; the page then reloads from the files.
+const TOKEN = document.querySelector('meta[name="feedcast-token"]').content;
+const note = document.getElementById('note');
+function say(m) { note.textContent = m; note.hidden = false; clearTimeout(note._t); note._t = setTimeout(() => { note.hidden = true; }, 4000); }
+async function api(path, body) {
+  try {
+    const r = await fetch('/api/' + path, {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Feedcast-Token': TOKEN}, body: JSON.stringify(body || {})});
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { say(j.error || 'That didn’t work.'); return null; }
+    return j;
+  } catch (e) { say('Feedcast serve stopped. Run feedcast setup again.'); return null; }
+}
+async function act(path, body) { if (await api(path, body)) location.reload(); }
+
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-act],[data-reveal],[data-addtime],[data-job]');
+  if (!t || t.disabled) return;
+  if (t.dataset.act) return act(t.dataset.act, JSON.parse(t.dataset.body || '{}'));
+  if (t.dataset.reveal) { const i = document.getElementById(t.dataset.reveal); t.hidden = true; i.hidden = false; i.focus(); return; }
+  if (t.dataset.job) { if (await api('jobs', {job: t.dataset.job})) busy(); return; }
+  const i = document.createElement('input');
+  Object.assign(i, {className: 'time', type: 'time', ariaLabel: 'Read at'});
+  i.dataset.cap = '';
+  t.before(i); i.focus();
+});
+document.addEventListener('keydown', e => {
+  const i = e.target.closest('[data-enter]');
+  if (i && e.key === 'Enter' && i.value.trim()) act(i.dataset.enter, {[i.dataset.field]: i.value.trim()});
+});
+document.addEventListener('change', e => {
+  const i = e.target;
+  if (i.dataset.change) return act(i.dataset.change, {[i.dataset.field]: i.value});
+  if (i.dataset.toggle) return act(i.dataset.toggle, {on: i.checked});
+  if (i.matches('[data-cap]')) return act('schedule', {captures: [...document.querySelectorAll('[data-cap]')].map(x => x.value).filter(Boolean)});
+  if (i.matches('[data-digest]') && i.value) return act('schedule', {digest: i.value});
+});
+
+// One background job at a time; while it runs, poll and reload when it ends.
+function busy() {
+  document.querySelectorAll('[data-job]').forEach(b => { b.disabled = true; });
+  const poll = async () => {
+    try {
+      const j = await (await fetch('/api/jobs')).json();
+      if (!j.running) return location.reload();
+      document.querySelectorAll('[data-job="' + j.running + '"]').forEach(b => { b.textContent = b.dataset.busy; });
+    } catch (e) { return say('Feedcast serve stopped. Run feedcast setup again.'); }
+    setTimeout(poll, 2000);
+  };
+  poll();
+}
+if (document.body.dataset.running) busy();
+</script>
+</body>
+</html>

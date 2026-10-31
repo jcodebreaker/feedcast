@@ -1,0 +1,16 @@
+[project]
+name = "feedcast"
+version = "0.1.0"
+description = "Your LinkedIn feed, read for you and filtered to the work you're doing."
+requires-python = ">=3.11"
+dependencies = ["pyyaml>=6"]
+
+[project.scripts]
+feedcast = "feedcast.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["feedcast"]

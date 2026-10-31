@@ -1,0 +1,526 @@
+<title>Feedcast, one day</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a vertical day, one scene per moment, time on the left; the evening page is the full-width payoff. */
+:root{
+  --paper:#f3eee4; --paper-2:#e9e2d3; --rule:#d6ccb8; --ink:#1b1c1f; --ink-2:#4b4d53; --ink-3:#7d7e84;
+  --warm:#b4441f; --link:#2c5878; --link-bg:#e2e7e6; --link-line:#c9d3d3; --ok:#3d6b46;
+  --term:#1c1d20; --term-fg:#e8e3d7; --term-dim:#8d8b86; --term-ok:#9cc79f; --term-warm:#e9946c;
+  --card:#fbf8f2; --shadow:0 1px 0 rgba(27,28,31,.04),0 8px 24px -14px rgba(27,28,31,.25);
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Instrument Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#16171a; --paper-2:#202226; --rule:#34363c; --ink:#ece6da; --ink-2:#bab5ab; --ink-3:#86847e;
+  --warm:#e27a52; --link:#93bad8; --link-bg:#1d2830; --link-line:#2c3c47; --ok:#8fc193;
+  --term:#0d0e10; --card:#1c1e22; --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 24px -14px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#16171a; --paper-2:#202226; --rule:#34363c; --ink:#ece6da; --ink-2:#bab5ab; --ink-3:#86847e;
+  --warm:#e27a52; --link:#93bad8; --link-bg:#1d2830; --link-line:#2c3c47; --ok:#8fc193;
+  --term:#0d0e10; --card:#1c1e22; --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 24px -14px rgba(0,0,0,.7); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 15.5px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 96px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.sample{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule);padding:5px 8px;border-radius:3px;white-space:nowrap}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font:600 26px/1 var(--serif);letter-spacing:-.02em}
+.lede{font:400 clamp(24px,3.4vw,34px)/1.2 var(--serif);letter-spacing:-.015em;margin:26px 0 8px;max-width:30ch;text-wrap:balance}
+.sub{color:var(--ink-2);max-width:62ch;margin:0}
+.day{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;margin:28px 0 8px;border-top:2px solid var(--ink)}
+.day a{text-decoration:none;padding:10px 8px 0 0;display:block;min-width:0}
+.day .t{font:600 12px/1 var(--mono);font-variant-numeric:tabular-nums}
+.day .l{font-size:12.5px;color:var(--ink-3);line-height:1.3;margin-top:5px}
+.day a:hover .l{color:var(--ink)}
+@media (max-width:640px){.day{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px}}
+
+/* scenes */
+.scene{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;padding:44px 0;border-top:1px solid var(--rule)}
+.when{font:600 13px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.when small{display:block;font:500 11px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+.scene h2{font:500 25px/1.2 var(--serif);letter-spacing:-.01em;margin:0 0 8px;text-wrap:balance}
+.scene .say{color:var(--ink-2);margin:0 0 20px;max-width:64ch}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:760px){.scene{grid-template-columns:1fr;gap:10px;padding:34px 0}.cols{grid-template-columns:1fr}}
+
+.term{background:var(--term);color:var(--term-fg);border-radius:6px;padding:16px 18px;font:400 13px/1.65 var(--mono);overflow-x:auto;white-space:pre;margin:0}
+.term .d{color:var(--term-dim)} .term .ok{color:var(--term-ok)} .term .w{color:var(--term-warm)} .term .p{color:var(--term-fg);font-weight:600}
+.box{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.box h3{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px}
+.box ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px}
+.box li+li{margin-top:4px}
+.never{margin-top:14px;font-size:13px;color:var(--ink-3)}
+.never b{color:var(--ink);font-weight:600}
+pre.yaml{margin:0;font:400 12.5px/1.6 var(--mono);color:var(--ink-2);white-space:pre-wrap;overflow-wrap:anywhere}
+pre.yaml .k{color:var(--ink);font-weight:500} pre.yaml .c{color:var(--ink-3)}
+
+/* capture */
+.feedwin{border:1px solid var(--rule);border-radius:6px;background:var(--card);height:320px;overflow:hidden;position:relative}
+.feedbar{display:flex;justify-content:space-between;gap:8px;font:500 11.5px/1 var(--mono);color:var(--ink-3);padding:10px 12px;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.feedbar .live{color:var(--ok)}
+.feedroll{padding:12px;display:flex;flex-direction:column;gap:10px;animation:roll 26s linear infinite}
+@keyframes roll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media (prefers-reduced-motion:reduce){.feedroll{animation:none}}
+.fp{border:1px solid var(--rule);border-radius:5px;padding:10px 12px;font-size:13px;color:var(--ink-2);background:var(--paper)}
+.fp b{color:var(--ink);font-weight:600;display:block;font-size:12.5px}
+.fp .tag{font:500 10.5px var(--mono);color:var(--ink-3)}
+.fp .ln{display:inline-block;margin-top:6px;font:500 11px var(--mono);color:var(--link);background:var(--link-bg);padding:2px 6px;border-radius:3px}
+.log{font:400 12.5px/1.75 var(--mono);color:var(--ink-2);margin:0;padding:0;list-style:none}
+.log li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px}
+.log .tm{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.log .ok{color:var(--ok)}
+
+/* links */
+.res{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr);gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--rule);font:400 12.5px/1.4 var(--mono)}
+.res:first-of-type{border-top:0}
+.res .from{color:var(--ink-3);overflow-wrap:anywhere}
+.res .arrow{color:var(--ink-3)}
+.res .to{color:var(--ink);overflow-wrap:anywhere}
+.res .to small{display:block;color:var(--ink-3);font-size:11.5px;margin-top:3px}
+@media (max-width:560px){.res{grid-template-columns:1fr}.res .arrow{display:none}}
+
+/* scoring */
+.score{width:100%;border-collapse:collapse;font-size:13.5px}
+.score th{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 10px 10px 0;border-bottom:1px solid var(--rule)}
+.score td{padding:10px 10px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+.score td:first-child{color:var(--ink)}
+.dots{display:inline-flex;gap:3px;vertical-align:middle}
+.dots i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink-3)}
+.dots i.f{background:var(--ink);border-color:var(--ink)}
+.cut td{border-bottom:2px dashed var(--warm)}
+.verdict{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.verdict.keep{color:var(--ok)} .verdict.skip{color:var(--ink-3)}
+.tablewrap{overflow-x:auto}
+.proj{font:600 12px/1 var(--mono);color:var(--ink);background:var(--paper-2);padding:3px 7px;border-radius:3px;white-space:nowrap}
+
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pass{border:1px solid var(--rule);border-radius:6px;padding:14px;background:var(--card)}
+.pass .t{font:600 13px var(--mono)}
+.pass .n{font:500 30px/1.1 var(--serif);margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.pass .s{font-size:12.5px;color:var(--ink-3)}
+.conv{margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--ink-2)}
+.faces{display:inline-flex}
+.faces span{width:26px;height:26px;border-radius:50%;background:var(--paper-2);border:2px solid var(--paper);display:grid;place-items:center;font:600 10px var(--mono);color:var(--ink-2);margin-left:-6px}
+.faces span:first-child{margin-left:0}
+@media (max-width:560px){.passes{grid-template-columns:1fr}}
+
+/* notification */
+.desk{border-radius:8px;padding:22px;background:linear-gradient(160deg,var(--paper-2),var(--rule));min-height:170px;display:flex;justify-content:flex-end;align-items:flex-start}
+.notif{width:min(360px,100%);background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;font-size:13px}
+.ico{width:34px;height:34px;border-radius:8px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:600 16px var(--serif)}
+.notif b{font-weight:600} .notif .tm{float:right;color:var(--ink-3);font-size:11.5px}
+.notif p{margin:2px 0 0;color:var(--ink-2)}
+
+/* ===== evening page ===== */
+.evening{border-top:2px solid var(--ink);margin-top:0;padding-top:44px}
+.evhead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.paper{max-width:740px;margin:22px auto 0;background:var(--card);border:1px solid var(--rule);border-radius:8px;box-shadow:var(--shadow);padding:clamp(18px,4vw,40px)}
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.mast .b{font:600 24px/1 var(--serif);letter-spacing:-.02em}
+.mast .m{font:500 11.5px/1.5 var(--mono);color:var(--ink-3);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.mast .m b{color:var(--ink)}
+.kick{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
+.fore{padding:24px 0 20px;border-bottom:1px solid var(--rule)}
+.fore p{font:400 22px/1.36 var(--serif);letter-spacing:-.01em;margin:0;text-wrap:pretty}
+.fore p b{font-weight:600}
+
+.tonight{padding:20px 0;border-bottom:1px solid var(--rule)}
+.quick{display:grid;gap:6px}
+.q{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:10px;align-items:baseline;text-decoration:none;padding:8px 10px;border-radius:4px;background:var(--link-bg);border:1px solid var(--link-line)}
+.q:hover{border-color:var(--link)}
+.q .i{font:500 12px var(--mono);color:var(--ink-3)}
+.q .t{font:600 14px/1.3 var(--sans);overflow-wrap:anywhere}
+.q .t small{font:500 11.5px var(--mono);color:var(--link);margin-left:6px}
+.q .m{font:500 11.5px var(--mono);color:var(--ink-3);white-space:nowrap}
+
+.group{padding-top:26px}
+.ghead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:6px}
+.ghead .proj{font-size:13px}
+.ghead .w{font:italic 400 16px/1.3 var(--serif);color:var(--ink-2)}
+.item{padding:18px 0;border-top:1px solid var(--rule)}
+.item.dim{opacity:.45}
+.chip{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:12px;align-items:center;text-decoration:none;background:var(--link-bg);border:1px solid var(--link-line);border-radius:5px;padding:11px 12px;margin-bottom:12px}
+.chip+.chip{margin-top:-6px}
+.chip:hover{border-color:var(--link)}
+.kind{font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--link)}
+.chip .t{font-weight:600;font-size:14.5px;line-height:1.3;overflow-wrap:anywhere}
+.chip .d{display:block;font-size:13px;color:var(--ink-2);line-height:1.4;margin-top:2px}
+.chip .m{font:500 11.5px/1.45 var(--mono);color:var(--ink-3);text-align:right;white-space:nowrap}
+.chip .m b{display:block;color:var(--ink);font-weight:600}
+.chip.miss{background:transparent;border-style:dashed}
+.chip.miss .t{font-weight:500;color:var(--ink-3)}
+@media (max-width:560px){.chip{grid-template-columns:minmax(0,1fr)}.chip .m{text-align:left}.chip .m b{display:inline;margin-right:8px}}
+.take{font:500 19px/1.3 var(--serif);letter-spacing:-.005em;margin:0;text-wrap:pretty}
+.badge{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warm);border:1px solid var(--warm);padding:3px 5px;border-radius:2px;vertical-align:3px;margin-left:8px;white-space:nowrap}
+.why{margin:6px 0 0;color:var(--ink-2);font-size:14.5px}
+.foot{display:flex;align-items:center;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--ink-3);flex-wrap:wrap}
+.foot a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule)}
+.fb{margin-left:auto;display:flex;gap:6px}
+.btn{appearance:none;background:none;border:1px solid var(--rule);color:var(--ink-3);font:500 11px/1 var(--mono);padding:7px 9px;border-radius:3px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:disabled{cursor:default;opacity:.7}
+
+.skipped{margin-top:28px;border-top:2px solid var(--ink);padding-top:14px}
+details summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:14px;color:var(--ink-2)}
+details summary::-webkit-details-marker{display:none}
+details summary b{color:var(--ink)}
+details summary .h{font:500 11px var(--mono);color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+details[open] summary .h::after{content:" · hide"}
+.sk{border-top:1px solid var(--rule);padding:10px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.sk:first-of-type{margin-top:10px}
+.sk .r{display:block;font:500 11px var(--mono);color:var(--ink-3);margin-top:2px}
+.colo{margin-top:26px;font:500 11px/1.8 var(--mono);color:var(--ink-3)}
+
+/* feedback + failure */
+.diff{font:400 12.5px/1.7 var(--mono);margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink-2)}
+.diff .m{color:var(--warm)} .diff .p{color:var(--ok)}
+.fails{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fails .box p{margin:0;font-size:14px;color:var(--ink-2)}
+.fails .box .ev{font:600 14px/1.3 var(--sans);color:var(--ink);margin-bottom:6px}
+.fails .box .out{margin-top:10px;font:500 12px/1.5 var(--mono);color:var(--ink-3)}
+@media (max-width:760px){.fails{grid-template-columns:1fr}}
+.cost{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:20px;font:500 12.5px var(--mono);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.cost b{color:var(--ink)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(16px);background:var(--ink);color:var(--paper);padding:11px 16px;border-radius:4px;font-size:13.5px;opacity:0;transition:.22s;pointer-events:none;max-width:min(520px,calc(100vw - 32px));z-index:20}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="brand">Feedcast</div>
+  <span class="sample">Sample data · invented people and repos</span>
+</header>
+<p class="lede">One day with Feedcast, from setup to the evening page.</p>
+<p class="sub">It reads your LinkedIn feed three times while you work, keeps what matches your interests, and gives you one page at 19:30. Here is every step, in order, with what you see and what runs on your Mac.</p>
+
+<nav class="day" aria-label="Jump to a moment">
+  <a href="#setup"><div class="t">Once</div><div class="l">Set up and profile</div></a>
+  <a href="#capture"><div class="t">09:00</div><div class="l">Morning read</div></a>
+  <a href="#score"><div class="t">09:05</div><div class="l">Links and scoring</div></a>
+  <a href="#passes"><div class="t">13:30 · 18:45</div><div class="l">More reads</div></a>
+  <a href="#evening"><div class="t">19:30</div><div class="l">Your evening page</div></a>
+  <a href="#after"><div class="t">After</div><div class="l">Feedback, failures</div></a>
+</nav>
+
+<!-- A. setup -->
+<section class="scene" id="setup">
+  <div class="when">Once<small>5 minutes</small></div>
+  <div>
+    <h2>You tell it which folders are your work</h2>
+    <p class="say">One command. It finds what you've been building lately, checks that Claude in Chrome can see LinkedIn, and installs the schedule. The first real read waits for your OK.</p>
+<pre class="term"><span class="d">$</span> <span class="p">feedcast init</span>
+Which folders hold your work?  <span class="p">~/code, ~/projects</span>
+<span class="ok">✓</span> 3 repos with commits in the last 14 days: nova, deckforge, codegraph-mcp
+Also use your Claude Code session titles? [Y/n]  <span class="p">y</span>
+<span class="ok">✓</span> 11 sessions in the last 14 days
+<span class="ok">✓</span> Claude in Chrome connected · linkedin.com allowed
+<span class="ok">✓</span> Anthropic API key saved to Keychain
+<span class="ok">✓</span> Schedule: reads at 09:00 · 13:30 · 18:45, page at 19:30
+
+<span class="w">First read is supervised.</span> Run it now and watch? [y/N]  <span class="p">y</span>
+<span class="d">Opening a LinkedIn tab in your Chrome…</span></pre>
+  </div>
+</section>
+
+<!-- B. profile -->
+<section class="scene">
+  <div class="when">Nightly<small>02:00 · and on demand</small></div>
+  <div>
+    <h2>It writes a short note about who you are, and that note is all the model sees of you</h2>
+    <p class="say">Seeded from git, session titles and your own LinkedIn profile, compressed by one Haiku call into a file you can open and edit. No project names. Your edits survive the nightly refresh.</p>
+    <div class="cols">
+      <div class="box">
+        <h3>Read on your Mac</h3>
+        <ul>
+          <li>Repo names and the first README paragraph</li>
+          <li>Dependency names (package.json, pyproject.toml)</li>
+          <li>Last 30 commit subjects per repo</li>
+          <li>Claude Code session titles and the first prompt, cut to 200 characters</li>
+          <li>Your LinkedIn headline, About, roles and skills (<code>feedcast profile --linkedin</code>, once)</li>
+          <li>Your pins and mutes</li>
+        </ul>
+        <p class="never"><b>Never leaves your Mac:</b> source code, diffs, full transcripts, Chrome cookies.</p>
+      </div>
+      <div class="box">
+        <h3>~/.feedcast/profile.yaml · sent to Claude</h3>
+<pre class="yaml"><span class="k">role:</span> AI engineer: agents, MCP, evals
+<span class="k">stack:</span> TypeScript, Python, MCP, SQLite
+<span class="k">interests:</span>
+  - agent evals and regression tests  <span class="c">0.9</span>
+  - MCP tool search                   <span class="c">0.9</span>
+  - pptx layout                       <span class="c">0.7</span>
+  - MCP auth                          <span class="c">0.6</span>
+<span class="k">not_interested:</span> hiring takes, "X is dead"
+<span class="k">mutes:</span> crypto</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- C. capture -->
+<section class="scene" id="capture">
+  <div class="when">09:00<small>3 to 5 minutes</small></div>
+  <div>
+    <h2>It scrolls your feed like a person, in your own Chrome</h2>
+    <p class="say">A background tab, the speed of someone reading with coffee. It never clicks anything: no likes, no "see more", no comments, no links. You can keep working.</p>
+    <div class="cols">
+      <div class="feedwin" aria-label="Feed being read">
+        <div class="feedbar"><span>linkedin.com/feed</span><span class="live">● reading · 31 of ~50</span></div>
+        <div class="feedroll">
+          <div class="fp"><b>Mariana Oyelaran</b><span class="tag">3h · 1,240 reactions</span><br>We now fail deploys on a 3% drop in tool-call accuracy. Here's the harness…<br><span class="ln">lnkd.in/eX7qPz</span></div>
+          <div class="fp"><b>Carlos Nwosu</b><span class="tag">5h · 1,900 reactions</span><br>Vibe coding is dead. Here's what's next 🧵</div>
+          <div class="fp"><b>Deng Weiming</b><span class="tag">Suggested · 1d</span><br>212 tools, 9 MCP servers, one search step. Wrong-tool rate 7% → under 1%.<br><span class="ln">weiming.engineering</span></div>
+          <div class="fp"><b>Promoted</b><span class="tag">ad</span><br>Scale your sales team with AI SDRs</div>
+          <div class="fp"><b>Astrid Lindqvist</b><span class="tag">2d · 164 reactions</span><br>Shipped slidefit 0.3: text that fits the box before you render.<br><span class="ln">lnkd.in/b7Rk2a</span></div>
+          <div class="fp"><b>Hélène Marchetti</b><span class="tag">8h</span><br>We replaced leetcode with "write an eval" in interviews.</div>
+          <div class="fp"><b>Mariana Oyelaran</b><span class="tag">3h · 1,240 reactions</span><br>We now fail deploys on a 3% drop in tool-call accuracy. Here's the harness…<br><span class="ln">lnkd.in/eX7qPz</span></div>
+          <div class="fp"><b>Carlos Nwosu</b><span class="tag">5h · 1,900 reactions</span><br>Vibe coding is dead. Here's what's next 🧵</div>
+          <div class="fp"><b>Deng Weiming</b><span class="tag">Suggested · 1d</span><br>212 tools, 9 MCP servers, one search step. Wrong-tool rate 7% → under 1%.<br><span class="ln">weiming.engineering</span></div>
+          <div class="fp"><b>Promoted</b><span class="tag">ad</span><br>Scale your sales team with AI SDRs</div>
+          <div class="fp"><b>Astrid Lindqvist</b><span class="tag">2d · 164 reactions</span><br>Shipped slidefit 0.3: text that fits the box before you render.<br><span class="ln">lnkd.in/b7Rk2a</span></div>
+          <div class="fp"><b>Hélène Marchetti</b><span class="tag">8h</span><br>We replaced leetcode with "write an eval" in interviews.</div>
+        </div>
+      </div>
+      <div class="box">
+        <h3>What it logs</h3>
+        <ul class="log">
+          <li><span class="tm">09:00:02</span><span>Chrome open, LinkedIn signed in</span></li>
+          <li><span class="tm">09:00:05</span><span>No security check on screen <span class="ok">✓</span></span></li>
+          <li><span class="tm">09:00:11</span><span>Scrolled, paused 4.1 s</span></li>
+          <li><span class="tm">09:00:19</span><span>Post 4: Mariana Oyelaran · 1 link</span></li>
+          <li><span class="tm">09:00:26</span><span>Post 5: promoted, noted and dropped</span></li>
+          <li><span class="tm">09:01:40</span><span>Post 18: link in first comment, already visible, taken</span></li>
+          <li><span class="tm">09:02:52</span><span>Post 27: "link in comments", hidden, left alone</span></li>
+          <li><span class="tm">09:04:31</span><span>Stopped at 48 posts · 0 clicks</span></li>
+          <li><span class="tm">09:04:32</span><span>Saved to ~/.feedcast/runs/0900.json</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- D. links + scoring -->
+<section class="scene" id="score">
+  <div class="when">09:05<small>about 30 seconds</small></div>
+  <div>
+    <h2>It pulls out what people shared, then checks each post against your work</h2>
+    <p class="say">Short links are opened without your LinkedIn session, so LinkedIn never sees them. GitHub, arXiv and Hugging Face add stars, authors and dates. Then Haiku scores each post 0 to 3 against your profile. Under 2 is skipped.</p>
+    <div class="box">
+      <h3>Links found</h3>
+      <div class="res"><span class="from">lnkd.in/eX7qPz</span><span class="arrow">→</span><span class="to">github.com/oyelaran-labs/agent-replay<small>repo · 2,310 stars · Python · pushed 2 days ago</small></span></div>
+      <div class="res"><span class="from">weiming.engineering/tool-search</span><span class="arrow">→</span><span class="to">212 tools, 9 MCP servers, one search step<small>article · 6 min read</small></span></div>
+      <div class="res"><span class="from">lnkd.in/b7Rk2a</span><span class="arrow">→</span><span class="to">github.com/lindqvist/slidefit<small>repo · 212 stars · v0.3.1</small></span></div>
+    </div>
+    <div class="box" style="margin-top:14px">
+      <h3>Scored against your interests</h3>
+      <div class="tablewrap">
+      <table class="score">
+        <thead><tr><th>Post</th><th>Score</th><th>Topic</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Fail deploys on eval regressions</td><td><span class="dots" aria-label="3 of 3"><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="proj">Agent Evals</span></td><td><span class="verdict keep">kept</span></td></tr>
+          <tr><td>One search step for 212 tools</td><td><span class="dots" aria-label="3 of 3"><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="proj">MCP</span></td><td><span class="verdict keep">kept</span></td></tr>
+          <tr class="cut"><td>slidefit 0.3, text that fits</td><td><span class="dots" aria-label="2 of 3"><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="proj">Slide Layout</span></td><td><span class="verdict keep">kept</span></td></tr>
+          <tr><td>"Write an eval" interviews</td><td><span class="dots" aria-label="1 of 3"><i class="f"></i><i></i><i></i></span></td><td>hiring, on your not-interested list</td><td><span class="verdict skip">skipped</span></td></tr>
+          <tr><td>Vibe coding is dead</td><td><span class="dots" aria-label="0 of 3"><i></i><i></i><i></i></span></td><td>muted "X is dead"</td><td><span class="verdict skip">skipped</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- E. passes -->
+<section class="scene" id="passes">
+  <div class="when">13:30 · 18:45<small>same thing, twice more</small></div>
+  <div>
+    <h2>Two more reads catch what the morning missed, and notice what keeps coming back</h2>
+    <p class="say">Posts already seen are recognised and not scored again. When several people share the same repo, it becomes one item, and that counts for more than reactions.</p>
+    <div class="passes">
+      <div class="pass"><div class="t">09:00</div><div class="n">48</div><div class="s">posts · 48 new · 5 kept</div></div>
+      <div class="pass"><div class="t">13:30</div><div class="n">52</div><div class="s">posts · 23 new · 1 kept</div></div>
+      <div class="pass"><div class="t">18:45</div><div class="n">42</div><div class="s">posts · 19 new · 1 kept</div></div>
+    </div>
+    <div class="conv"><span class="faces"><span>MO</span><span>TK</span><span>RB</span><span>JL</span><span>AS</span></span> agent-replay: shared by 1 at 09:00, 3 by 13:30, <b>5 by 18:45</b>. It goes to the top.</div>
+  </div>
+</section>
+
+<!-- F. notification -->
+<section class="scene">
+  <div class="when">19:30<small>one notification</small></div>
+  <div>
+    <h2>One Opus call writes the page, and your Mac taps you once</h2>
+    <p class="say">Counts and links come from the local database, so the model can't invent a number or a URL. Click the notification and the page opens.</p>
+    <div class="desk">
+      <div class="notif" role="img" aria-label="macOS notification from Feedcast">
+        <div class="ico">F</div>
+        <div><span class="tm">now</span><b>Feedcast</b><p>Agent evals in CI, three days running. 7 things for your work tonight.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- G. the evening page -->
+<section class="evening" id="evening">
+  <div class="evhead">
+    <div class="when">19:30<small>the page you read</small></div>
+    <span class="sample">Click the links and buttons</span>
+  </div>
+
+  <article class="paper">
+    <header class="mast">
+      <span class="b">Feedcast</span>
+      <span class="m">Thu 30 Oct · 3 reads · <b>7</b> for you · 38 skipped · about 60 s</span>
+    </header>
+
+    <div class="fore">
+      <p class="kick">Today in your feed</p>
+      <p>Agent evals in CI, three days running now, and <b>five people shared the same harness repo</b>. One tool-search write-up brought <b>real numbers on MCP</b>. Quiet on slide layout: <b>one small library</b>.</p>
+    </div>
+
+    <div class="tonight">
+      <p class="kick">If you open three things</p>
+      <div class="quick">
+        <a class="q" href="#" data-t="github.com/oyelaran-labs/agent-replay"><span class="i">1</span><span class="t">oyelaran-labs/agent-replay<small>GitHub</small></span><span class="m">shared by 5</span></a>
+        <a class="q" href="#" data-t="weiming.engineering/tool-search"><span class="i">2</span><span class="t">212 tools, 9 MCP servers, one search step<small>Article</small></span><span class="m">6 min</span></a>
+        <a class="q" href="#" data-t="arxiv.org"><span class="i">3</span><span class="t">When Does the Judge Disagree?<small>Paper</small></span><span class="m">14 pp</span></a>
+      </div>
+    </div>
+
+    <section class="group">
+      <div class="ghead"><span class="proj">Agent Evals</span><span class="w">one harness, five sharers, building for 3 days</span></div>
+
+      <div class="item">
+        <a class="chip" href="#" data-t="github.com/oyelaran-labs/agent-replay"><span class="kind">GitHub</span><span><span class="t">oyelaran-labs/agent-replay</span><span class="d">Replays recorded agent sessions against a new build and fails CI on regression.</span></span><span class="m"><b>2,310 stars</b>Python · 2 d ago</span></a>
+        <h3 class="take">Teams are failing deploys on agent eval regressions, and this is the harness they point at.<span class="badge">shared by 5</span></h3>
+        <p class="why">Five people shared it today; recordings are plain JSONL, so it works outside Python.</p>
+        <div class="foot">via Mariana Oyelaran and 4 others · <a href="#" data-t="the most-reacted of the 5 posts">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+
+      <div class="item">
+        <a class="chip" href="#" data-t="arxiv.org"><span class="kind">Paper</span><span><span class="t">When Does the Judge Disagree?</span><span class="d">1,800 agent trajectories: LLM judges disagree with humans 31% of the time on tool use.</span></span><span class="m"><b>arXiv</b>cs.CL · 14 pp</span></a>
+        <h3 class="take">Model-as-judge is weakest exactly on tool use.</h3>
+        <p class="why">The appendix rubric brought disagreement down to 14%, and it is short enough to copy.</p>
+        <div class="foot">via Anneliese Brandt · suggested · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+
+      <div class="item">
+        <a class="chip" href="#" data-t="github.com/khoury-ai/agent-failure-cases"><span class="kind">GitHub</span><span><span class="t">khoury-ai/agent-failure-cases</span><span class="d">1,100 eval cases in 9 failure modes, JSONL, MIT. Loads into agent-replay.</span></span><span class="m"><b>640 stars</b>pushed today</span></a>
+        <h3 class="take">A free starter set of eval cases, sorted by how agents fail.<span class="badge">new today</span></h3>
+        <p class="why">"Stops too early" and "ignores tool error" are the two biggest buckets.</p>
+        <div class="foot">via Samir Khoury · suggested · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+
+      <div class="item">
+        <a class="chip" href="#" data-t="gist.github.com"><span class="kind">Gist</span><span><span class="t">example-retrieval-prompt.py</span><span class="d">60 lines: retrieve three examples, build the prompt, run the eval.</span></span><span class="m"><b>gist</b>Python</span></a>
+        <h3 class="take">Three retrieved examples beat a 2,400-token rule list, 86% against 81%.</h3>
+        <p class="why">A clean A/B with the code attached, cheap to rerun on any eval set.</p>
+        <div class="foot">via Priya Raghunathan · you follow · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+    </section>
+
+    <section class="group">
+      <div class="ghead"><span class="proj">MCP</span><span class="w">clear signal on tool search</span></div>
+
+      <div class="item">
+        <a class="chip" href="#" data-t="weiming.engineering/tool-search"><span class="kind">Article</span><span><span class="t">212 tools, 9 MCP servers, one search step</span><span class="d">Wrong-tool rate fell from 7% to under 1% with nothing else changed.</span></span><span class="m"><b>weiming.engineering</b>6 min</span></a>
+        <h3 class="take">Keep your 14 tools and let the client search them, instead of merging them.</h3>
+        <p class="why">Real before-and-after numbers, and it links the MCP spec discussion.</p>
+        <div class="foot">via Deng Weiming · suggested · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+
+      <div class="item">
+        <span class="chip miss"><span class="kind">Link</span><span class="t">The link is in a hidden comment. Open the post to get it.</span><span class="m"></span></span>
+        <h3 class="take">A long thread on MCP auth: per-user tokens or one server credential.</h3>
+        <p class="why">The clearest write-up of the trade-off so far.</p>
+        <div class="foot">via Ines Castellanos · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+    </section>
+
+    <section class="group">
+      <div class="ghead"><span class="proj">Slide Layout</span><span class="w">quiet</span></div>
+      <div class="item">
+        <a class="chip" href="#" data-t="github.com/lindqvist/slidefit"><span class="kind">GitHub</span><span><span class="t">lindqvist/slidefit</span><span class="d">Fits text and images to the box in python-pptx before rendering.</span></span><span class="m"><b>212 stars</b>v0.3.1</span></a>
+        <h3 class="take">Fit text up front instead of catching overflow afterwards.</h3>
+        <p class="why">Sits on python-pptx and fixes overflow before render. Early, v0.3.</p>
+        <div class="foot">via Astrid Lindqvist · <a href="#" data-t="the post">open post</a><span class="fb"><button class="btn" data-fb="more">more like this</button><button class="btn" data-fb="less">not relevant</button></span></div>
+      </div>
+    </section>
+
+    <section class="skipped">
+      <details>
+        <summary><span><b>38 skipped</b> as unrelated · 6 ads dropped · 85 repeats merged</span><span class="h">peek</span></summary>
+        <div class="sk"><span>Jordan Achebe-Lind · vibe coding moved down the stack<span class="r">score 1 · opinion, nothing shared</span></span><button class="btn" data-rescue>more like this</button></div>
+        <div class="sk"><span>Hélène Marchetti · "write an eval" in interviews<span class="r">score 1 · hiring, on your not-interested list</span></span><button class="btn" data-rescue>more like this</button></div>
+        <div class="sk"><span>Yusuf Adebayo · quantisation regressions nobody benchmarks<span class="r">score 1 · on-device, not in your stack</span></span><button class="btn" data-rescue>more like this</button></div>
+        <div class="sk"><span>Carlos Nwosu · vibe coding is dead<span class="r">score 0 · muted "X is dead"</span></span><button class="btn" data-rescue>more like this</button></div>
+      </details>
+    </section>
+
+    <p class="colo">Read in your Chrome · 142 posts over 13 min · nothing clicked, liked or followed · links opened without your session · $0.14 today · matched to: AI engineer: agents, MCP, evals</p>
+  </article>
+</section>
+
+<!-- H. after -->
+<section class="scene" id="after">
+  <div class="when">After<small>the same night</small></div>
+  <div>
+    <h2>Your buttons tune tomorrow</h2>
+    <p class="say">Say you press "not relevant" on the MCP auth thread. At 02:00 the profile refresh reads your last 30 answers and adjusts the weights. Tomorrow, auth posts need a stronger match to make the page.</p>
+    <div class="box">
+      <h3>profile.yaml, after tonight</h3>
+<pre class="diff">  interests:
+    - agent evals and regression tests  0.9
+    - MCP tool search                   0.9
+<span class="m">-   - MCP auth                          0.6</span>
+<span class="p">+   - MCP auth                          0.4</span>
+<span class="p">+   - eval case datasets                0.7   (you pressed "more like this")</span></pre>
+    </div>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="when">If it goes wrong<small>it stops and tells you</small></div>
+  <div>
+    <h2>It errs on the side of your account</h2>
+    <div class="fails">
+      <div class="box"><div class="ev">LinkedIn shows a security check</div><p>The read stops at once, touches nothing and pauses every future read.</p><div class="out">"Feedcast paused. LinkedIn asked for a check. Nothing was clicked. Run feedcast resume when you're ready."</div></div>
+      <div class="box"><div class="ev">Your Mac is asleep at 13:30</div><p>The read runs when it wakes, if Chrome is open. If not, it's skipped.</p><div class="out">Tonight's page says "based on 2 reads".</div></div>
+      <div class="box"><div class="ev">No reads all day</div><p>No page gets made, so you get no empty report.</p><div class="out">One notification: "No reads today. Chrome was closed."</div></div>
+    </div>
+    <div class="cost"><span><b>3</b> reads a day</span><span><b>~140</b> posts</span><span><b>0</b> clicks</span><span><b>under $0.20</b> a day</span><span><b>nothing</b> hosted</span></div>
+  </div>
+</section>
+
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const toastEl=document.getElementById('toast');
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toastEl._x);toastEl._x=setTimeout(()=>toastEl.classList.remove('on'),2400)}
+document.addEventListener('click',e=>{
+  const link=e.target.closest('[data-t]');
+  if(link){e.preventDefault();toast('Would open '+link.dataset.t);return}
+  const fb=e.target.closest('[data-fb]');
+  if(fb){
+    const item=fb.closest('.item');
+    item.querySelectorAll('[data-fb]').forEach(b=>b.classList.remove('on'));fb.classList.add('on');
+    const less=fb.dataset.fb==='less';
+    item.classList.toggle('dim',less);
+    toast(less?'Noted. Fewer like this.':'Noted. More like this.');
+    return
+  }
+  const r=e.target.closest('[data-rescue]');
+  if(r){r.textContent='noted';r.disabled=true;toast('Noted. Posts like this score higher from tomorrow.')}
+});
+</script>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feedcast · Fri 30 Oct</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f4f1; --surface:#ffffff; --surface-2:#efefeb; --line:#e3e2dc; --ink:#121316; --ink-2:#55575e; --ink-3:#8b8d94;
+  --accent:#ff5b2e; --accent-ink:#ffffff; --link:#1f5eff; --ok:#16a34a; --warn:#d97706;
+  --r:16px; --shadow:0 1px 2px rgba(18,19,22,.06),0 10px 30px -18px rgba(18,19,22,.35);
+  --sans:"Geist",-apple-system,"Helvetica Neue",Arial,sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0c0d10; --surface:#15171b; --surface-2:#1d2025; --line:#262a30; --ink:#f2f2ef; --ink-2:#a9abb2; --ink-3:#71747c;
+  --accent:#ff6a40; --link:#7aa2ff; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.9); color-scheme:dark}}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none} button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.row{display:flex;align-items:center;gap:16px}
+[hidden]{display:none!important}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .row{height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.mark{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,var(--accent),#ffb02e,var(--accent));box-shadow:inset 0 0 0 5px var(--bg)}
+.reads{display:flex;gap:18px;margin:0 auto;padding:0;list-style:none;font:500 12px var(--mono);color:var(--ink-3)}
+.reads li{display:flex;align-items:center;gap:7px}
+.reads b{color:var(--ink);font-weight:500}
+.reads i{width:44px;height:6px;border-radius:9px;background:var(--surface-2);position:relative;overflow:hidden}
+.reads i::after{content:"";position:absolute;inset:0;width:calc(var(--v)*100%);background:var(--accent);border-radius:9px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px;font-weight:500;font-size:13.5px;white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn.ghost{background:transparent}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.status{margin:0 auto;font:500 12.5px var(--mono);color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 20%,transparent)}
+
+/* intro */
+.intro{padding:44px 0 22px;max-width:860px}
+.date{font:500 12.5px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin:0 0 12px}
+h1{font-weight:600;font-size:clamp(26px,3.6vw,40px);line-height:1.15;letter-spacing:-.03em;margin:0;text-wrap:balance}
+h1 b{font-weight:600;background:linear-gradient(transparent 62%,color-mix(in srgb,var(--accent) 30%,transparent) 0)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill{font:500 12.5px var(--mono);padding:6px 11px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2)}
+.pill.strong{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 22px}
+.tab{border:1px solid var(--line);background:transparent;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink-2)}
+.tab span{font:500 11.5px var(--mono);color:var(--ink-3);margin-left:4px}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)} .tab.on span{color:inherit;opacity:.7}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--ink) 18%,var(--line))}
+.img{aspect-ratio:16/9;background:var(--surface-2);overflow:hidden;max-width:100%}
+.img img{width:100%;height:100%;object-fit:cover;display:block}
+.img.quote{display:flex;align-items:flex-end;padding:20px;background:
+  radial-gradient(120% 90% at 0% 0%,hsl(var(--h) 85% 62% / .55),transparent 60%),
+  radial-gradient(90% 90% at 100% 100%,hsl(calc(var(--h) + 60) 85% 58% / .45),transparent 60%),var(--surface-2)}
+.img.quote p{margin:0;font-size:17px;line-height:1.35;font-weight:500;letter-spacing:-.01em;color:var(--ink);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.body{padding:16px 18px 14px;display:flex;flex-direction:column;gap:9px;flex:1;min-width:0}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.topic{font:500 11.5px var(--mono);color:var(--ink-2);background:var(--surface-2);padding:3px 8px;border-radius:6px}
+.badge{font:600 11px var(--mono);color:var(--accent-ink);background:var(--accent);padding:3px 8px;border-radius:6px}
+.card h3{margin:0;font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.015em;text-wrap:pretty}
+.why{margin:0;color:var(--ink-2);font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.links{display:flex;flex-direction:column;gap:6px}
+.res{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--link) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--link) 18%,var(--line))}
+.res:hover{border-color:var(--link)}
+.res .k{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--link)}
+.res .rt{font-weight:500;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .rs{font:500 11.5px var(--mono);color:var(--ink-3)}
+.card footer{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);font-size:13px}
+.who{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25;font-weight:500}
+.who small{color:var(--ink-3);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who a:hover{color:var(--link)}
+.stat{font:500 12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.open{font-weight:500;color:var(--link);white-space:nowrap}
+.fb{display:flex;gap:4px}
+.fb button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink-3);font-size:14px;line-height:1}
+.fb button:hover{color:var(--ink);border-color:var(--ink-3)}
+.fb button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.av{width:32px;height:32px;border-radius:50%;flex:none;display:inline-grid;place-items:center;font:600 12px var(--sans);color:#fff;background:hsl(var(--h,220) 55% 48%);object-fit:cover}
+.av.sm{width:26px;height:26px;font-size:10px} .av.lg{width:56px;height:56px;font-size:20px}
+
+.card.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);margin-bottom:18px}
+.card.hero .img{aspect-ratio:auto;height:100%;min-height:300px}
+.card.hero .body{padding:26px 28px 20px;gap:12px}
+.card.hero h3{font-size:clamp(20px,2.4vw,27px);letter-spacing:-.025em}
+.card.hero .why{-webkit-line-clamp:5;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+
+/* skipped */
+.skipped{margin:34px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.skipped summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 18px;color:var(--ink-2)}
+.skipped summary::-webkit-details-marker{display:none}
+.skipped summary b{color:var(--ink);font-weight:600}
+.stack{display:flex} .stack .av{margin-left:-8px;box-shadow:0 0 0 2px var(--surface)} .stack .av:first-child{margin-left:0}
+.peek{margin-left:auto;font:500 12px var(--mono);color:var(--ink-3)}
+.skipped ul{list-style:none;margin:0;padding:0 18px 10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.skipped li{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;min-width:0}
+.skipped li span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column}
+.skipped li small{color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skipped li button{border:1px solid var(--line);background:transparent;border-radius:8px;width:28px;height:28px;color:var(--ink-3)}
+.colo{font:500 12px var(--mono);color:var(--ink-3);text-align:center;padding:30px 0 60px}
+
+/* setup */
+.two{display:grid;grid-template-columns:220px minmax(0,1fr);gap:36px;padding-block:36px 80px}
+.steps{position:sticky;top:90px;align-self:start;display:flex;flex-direction:column;gap:4px}
+.steps a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--ink-2);font-weight:500}
+.steps a:hover{background:var(--surface)}
+.steps b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:600 12px var(--mono);border:1.5px solid var(--line);background:var(--surface)}
+.steps a.done b{background:var(--ok);border-color:var(--ok);color:#fff;font-size:0}
+.steps a.done b::after{content:"✓";font-size:13px}
+.panes{display:flex;flex-direction:column;gap:18px;min-width:0}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 26px;box-shadow:var(--shadow);scroll-margin-top:90px}
+.pane header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.pane h2{margin:0;font-size:20px;letter-spacing:-.02em;font-weight:600}
+.pane h4{margin:18px 0 10px;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.sub{color:var(--ink-2);margin:0 0 14px;max-width:62ch} .small{font-size:12.5px} .mono{font-family:var(--mono)}
+.ok-pill,.warn-pill{font:500 12px var(--mono);padding:5px 10px;border-radius:999px;white-space:nowrap}
+.ok-pill{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.warn-pill{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 8px 7px 13px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-size:13.5px;font-weight:500}
+.chip button{border:0;background:transparent;color:var(--ink-3);padding:0 4px;font-size:15px;line-height:1}
+.chip.add{padding:7px 13px;background:transparent;border-style:dashed;color:var(--ink-2)}
+.toggle{display:flex;align-items:center;gap:12px;font-weight:500;cursor:pointer;margin-top:6px}
+.toggle input{position:absolute;opacity:0}
+.toggle span{width:40px;height:24px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);position:relative;transition:.15s}
+.toggle span::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--ink-3);transition:.15s}
+.toggle input:checked+span{background:var(--ink);border-color:var(--ink)}
+.toggle input:checked+span::after{left:18px;background:var(--bg)}
+.li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:start;margin-top:10px}
+.li b{font-size:16px} .li .sub{margin:4px 0 6px}
+.role{width:100%;font:600 17px var(--sans);letter-spacing:-.01em;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0 14px}
+.ints{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.int{display:grid;grid-template-columns:minmax(0,1fr) 70px auto;gap:12px;align-items:center;padding:9px 10px 9px 14px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;font-weight:500}
+.int .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.int .w{height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden}
+.int .w i{display:block;height:100%;width:calc(var(--v)*100%);background:var(--accent);border-radius:9px}
+.int button{border:0;background:transparent;color:var(--ink-3);font-size:16px}
+.int.add{grid-template-columns:1fr;border-style:dashed}
+.int.add input{border:0;background:transparent;font:inherit;color:var(--ink);outline:none}
+.sent{margin-top:16px} .sent summary{cursor:pointer;color:var(--ink-2);font-weight:500}
+.sent pre{font:12px/1.6 var(--mono);color:var(--ink-2);background:var(--surface-2);border-radius:12px;padding:14px;overflow:auto;max-height:240px;white-space:pre-wrap}
+.sched{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:6px 0 20px}
+.times{display:flex;gap:8px;flex-wrap:wrap}
+.time{font:500 15px var(--mono);padding:10px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.time.big{font-size:15px} .time.add{background:transparent;border-style:dashed;color:var(--ink-3)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:10px 14px;font-weight:500;color:var(--ink-2)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.runs{list-style:none;margin:6px 0 14px;padding:0}
+.runs li{display:grid;grid-template-columns:auto 56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.runs b{font:500 14px var(--mono)} .runs .st{font:500 12px var(--mono);color:var(--ink-3)}
+.dot{width:9px;height:9px;border-radius:50%} .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)}
+
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card.hero{grid-template-columns:1fr}.card.hero .img{min-height:0;aspect-ratio:16/9}.reads{display:none}.two{grid-template-columns:1fr}.steps{position:static;flex-direction:row;overflow-x:auto}.sched{grid-template-columns:1fr}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}.ints{grid-template-columns:1fr}.skipped ul{grid-template-columns:1fr}.li{grid-template-columns:auto minmax(0,1fr)}.li .btn{grid-column:1/-1}}
+
+/* product additions on top of the approved prototype */
+.btn:disabled{opacity:.6;cursor:default}
+.res.miss{background:transparent;border-style:dashed;grid-template-columns:auto minmax(0,1fr)}
+.res.miss .rt{white-space:normal;color:var(--ink-3)}
+.fbnote{font:500 11.5px var(--mono);color:var(--warn)}
+.note{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13.5px;z-index:9;max-width:calc(100vw - 32px)}
+.chip.in{padding:7px 13px;color:var(--ink);font:inherit;font-size:13.5px;outline:none;min-width:200px}
+.chip.in.mono{font-family:var(--mono)}
+input.time{color:var(--ink);font:500 14px var(--mono);padding:8px 10px}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 6px;padding:12px 14px;border-radius:12px;color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);font-weight:500}
+.warn-text{color:var(--warn)}
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:36px 0 60px}
+.days .body{padding:18px 20px}
+.days h3{margin:0;font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.015em}
+.empty{color:var(--ink-3);padding:60px 0;text-align:center}
+@media (max-width:900px){.days{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.days{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap row"><a class="logo" href="index.html"><span class="mark"></span>Feedcast</a><ol class="reads" aria-label="Today's reads"><li><b>04:00</b><i style="--v:0.96"></i><small>48</small></li><li><b>08:30</b><i style="--v:0.94"></i><small>47</small></li><li><b>13:45</b><i style="--v:0.94"></i><small>47</small></li></ol><a class="btn ghost" href="http://127.0.0.1:8765/setup">Setup</a></div></header><main class="wrap"><section class="intro"><p class="date">Friday evening · 30 October</p><h1>Agent evals in CI, three days running now, and <b>three people shared the same harness repo</b>. One tool-search write-up brought <b>real numbers on MCP</b>. Quiet on slide layout: <b>one small library</b>.</h1><div class="pills"><span class="pill strong">6 for you</span><span class="pill">11 posts read</span><span class="pill">2 skipped</span><span class="pill">1 ad dropped</span><span class="pill">Sample data · invented people and repos</span></div></section><nav class="tabs" aria-label="Topics"><button class="tab on" type="button" data-f="all">All <span>6</span></button><button class="tab" type="button" data-f="Agent Evals">Agent Evals <span>3</span></button><button class="tab" type="button" data-f="Tools &amp; MCP">Tools &amp; MCP <span>2</span></button><button class="tab" type="button" data-f="Also">Also <span>1</span></button></nav><article class="card hero" data-g="Agent Evals"><div class="img quote" style="--h:203"><p>“We now fail deploys when agent evals regress. agent-replay replays recorded sessions against the new build.”</p></div><div class="body"><div class="meta"><span class="topic">Agent Evals</span><span class="badge">shared by 3</span></div><h3>Teams are failing deploys on agent eval regressions, and this is the harness they point at.</h3><p class="why">Three people shared it today; the recording format is plain JSONL, so it works outside Python.</p><div class="links"><a class="res" href="https://github.com/oyelaran-labs/agent-replay" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="rt">oyelaran-labs/agent-replay</span><span class="rs">2,310 ★</span></a></div><footer><span class="av md" style="--h:234">MO</span><span class="who"><span>Mariana Oyelaran</span><small>and 2 others</small></span><span class="stat">1,240 ♥</span><a class="open" href="https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000001" target="_blank" rel="noopener noreferrer">Open post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000001" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000001" data-verdict="not_relevant">－</button></span></footer></div></article><section class="grid"><article class="card" data-g="Agent Evals"><div class="img quote" style="--h:203"><p>“LLM judges disagree with humans 31% of the time on tool use. New paper.”</p></div><div class="body"><div class="meta"><span class="topic">Agent Evals</span></div><h3>Model-as-judge is weakest exactly on tool use.</h3><p class="why">The appendix rubric brought disagreement down a lot.</p><div class="links"><a class="res" href="https://arxiv.org/abs/2610.01234" target="_blank" rel="noopener noreferrer"><span class="k">Paper</span><span class="rt">When Does the Judge Disagree?</span><span class="rs">arXiv</span></a></div><footer><span class="av md" style="--h:32">AB</span><span class="who"><span>Anneliese Brandt</span><small></small></span><span class="stat">410 ♥</span><a class="open" href="https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000004" target="_blank" rel="noopener noreferrer">Open post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000004" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000004" data-verdict="not_relevant">－</button></span></footer></div></article><article class="card" data-g="Agent Evals"><div class="img quote" style="--h:203"><p>“1,100 eval cases in 9 failure modes, MIT licensed.”</p></div><div class="body"><div class="meta"><span class="topic">Agent Evals</span><span class="badge">new today</span></div><h3>A free starter set of eval cases, sorted by how agents fail.</h3><p class="why">&quot;Stops too early&quot; and &quot;ignores tool error&quot; are the two biggest buckets.</p><div class="links"><a class="res" href="https://github.com/khoury-ai/agent-failure-cases" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="rt">khoury-ai/agent-failure-cases</span><span class="rs">640 ★</span></a></div><footer><span class="av md" style="--h:88">SK</span><span class="who"><span>Samir Khoury</span><small></small></span><span class="stat">220 ♥</span><a class="open" href="https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000005" target="_blank" rel="noopener noreferrer">Open post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000005" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000005" data-verdict="not_relevant">－</button></span></footer></div></article><article class="card" data-g="Tools &amp; MCP"><div class="img quote" style="--h:239"><p>“212 tools, 9 MCP servers, one search step. Wrong-tool rate fell under 1%.”</p></div><div class="body"><div class="meta"><span class="topic">MCP</span></div><h3>Keep your tools and let the client search them, instead of merging them.</h3><p class="why">Wrong-tool picks fell to under 1% across 212 tools.</p><div class="links"><a class="res" href="https://weiming.example.com/tool-search" target="_blank" rel="noopener noreferrer"><span class="k">Article</span><span class="rt">212 tools, 9 MCP servers, one search step</span><span class="rs">weiming.example.com</span></a></div><footer><span class="av md" style="--h:42">DW</span><span class="who"><span><a href="https://www.linkedin.com/in/deng-weiming-example/" target="_blank" rel="noopener noreferrer">Deng Weiming</a></span><small></small></span><span class="stat">530 ♥</span><a class="open" href="https://www.linkedin.com/search/results/content/?keywords=212%20tools%209%20MCP%20servers%20one%20search%20step" target="_blank" rel="noopener noreferrer">Find post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000006" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000006" data-verdict="not_relevant">－</button></span></footer></div></article><article class="card" data-g="Tools &amp; MCP"><div class="img quote" style="--h:239"><p>“Long thread on MCP auth: per-user tokens or one server credential? Link in comments.”</p></div><div class="body"><div class="meta"><span class="topic">MCP</span></div><h3>A long thread on MCP auth: per-user tokens or one server credential.</h3><p class="why">The clearest write-up of the trade-off so far.</p><div class="links"><span class="res miss"><span class="k">Link</span><span class="rt">The link is in a hidden comment. Open the post to get it.</span></span></div><footer><span class="av md" style="--h:35">IC</span><span class="who"><span>Ines Castellanos</span><small></small></span><span class="stat">95 ♥</span><a class="open" href="https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000007" target="_blank" rel="noopener noreferrer">Open post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000007" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000007" data-verdict="not_relevant">－</button></span></footer></div></article><article class="card" data-g="Also"><div class="img quote" style="--h:248"><p>“slidefit fits text to the box in python-pptx before rendering.”</p></div><div class="body"><div class="meta"><span class="topic">Slide Layout</span></div><h3>Fit text up front instead of catching overflow afterwards.</h3><p class="why">Sits on python-pptx. Early, v0.3.</p><div class="links"><a class="res" href="https://github.com/lindqvist/slidefit" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="rt">lindqvist/slidefit</span><span class="rs">212 ★</span></a></div><footer><span class="av md" style="--h:347">AL</span><span class="who"><span>Astrid Lindqvist</span><small></small></span><span class="stat">60 ♥</span><a class="open" href="https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000008" target="_blank" rel="noopener noreferrer">Open post ↗</a><span class="fb"><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000008" data-verdict="more_like_this">＋</button><button type="button" aria-label="Not relevant" title="Not relevant" data-key="urn:li:activity:7300000000000000008" data-verdict="not_relevant">－</button></span></footer></div></article></section><details class="skipped"><summary><span class="stack"><span class="av sm" style="--h:327">JA</span><span class="av sm" style="--h:277">CN</span></span><span><b>2 posts skipped</b> as unrelated to you</span><span class="peek">Peek</span></summary><ul><li><span class="av sm" style="--h:327">JA</span><span>Jordan Achebe-Lind<small>vibe coding moved down the stack</small></span><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000009" data-verdict="more_like_this">＋</button></li><li><span class="av sm" style="--h:277">CN</span><span>Carlos Nwosu<small>vibe coding is dead</small></span><button type="button" aria-label="More like this" title="More like this" data-key="urn:li:activity:7300000000000000010" data-verdict="more_like_this">＋</button></li></ul></details><p class="colo">Read in your own Chrome · 142 posts over 13 min · nothing clicked, liked or followed · links opened without your session · $0.01 today · matched to: AI engineer: agents, MCP, evals; TypeScript, Python</p></main>
+<p class="note" id="note" role="status" aria-live="polite" hidden></p>
+<script>
+// Topic tabs filter the cards on the page.
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+  const f = t.dataset.f;
+  document.querySelectorAll('.card[data-g]').forEach(c => { c.hidden = !(f === 'all' || c.dataset.g === f); });
+}));
+// The + / - buttons save through `feedcast serve` (same origin). Opened as a file, or with the server down, say so.
+const note = document.getElementById('note');
+function say(m) { note.textContent = m; note.hidden = false; clearTimeout(note._t); note._t = setTimeout(() => { note.hidden = true; }, 3200); }
+async function save(key, verdict) {
+  if (location.protocol !== 'http:') return false;
+  try {
+    const r = await fetch('/feedback', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({key: key, verdict: verdict})});
+    return r.ok;
+  } catch (e) { return false; }
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-verdict]');
+  if (!b || b.disabled) return;
+  const group = b.parentNode;
+  if (!await save(b.dataset.key, b.dataset.verdict)) {
+    if (!group.querySelector('.fbnote')) group.insertAdjacentHTML('afterbegin', '<span class="fbnote">not saved, feedcast serve is off</span>');
+    return;
+  }
+  group.querySelector('.fbnote')?.remove();
+  group.querySelectorAll('[data-verdict]').forEach(x => x.classList.toggle('on', x === b));
+  say(b.dataset.verdict === 'not_relevant' ? 'Noted. Fewer like this.' : 'Noted. More like this.');
+});
+</script>
+</body>
+</html>

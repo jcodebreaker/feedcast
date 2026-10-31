@@ -1,0 +1,55 @@
+{
+  "_note": "INVENTED SAMPLE DATA. People, posts, repos and papers are fictional. Seeds a temp DB for tests and fixtures/report/sample-report.html.",
+  "date": "2026-10-30",
+  "profile": {
+    "role": "AI engineer: agents, MCP, evals; TypeScript, Python",
+    "stack": ["TypeScript", "Python"],
+    "interests": [
+      {"topic": "agent evals", "weight": 0.9, "auto": true},
+      {"topic": "MCP tool design", "weight": 0.8, "auto": true},
+      {"topic": "document generation", "weight": 0.5, "auto": true}
+    ]
+  },
+  "runs": [
+    {"id": 1, "file": "runs/2026-10-28/0900.json", "started_at": "2026-10-28T12:00:00+00:00", "ended_at": "2026-10-28T12:04:00+00:00", "posts_seen": 40, "posts_new": 40, "status": "ok"},
+    {"id": 2, "file": "runs/2026-10-29/0900.json", "started_at": "2026-10-29T12:00:00+00:00", "ended_at": "2026-10-29T12:04:00+00:00", "posts_seen": 42, "posts_new": 42, "status": "ok"},
+    {"id": 3, "file": "runs/2026-10-30/0900.json", "started_at": "2026-10-30T08:00:00+00:00", "ended_at": "2026-10-30T08:05:00+00:00", "posts_seen": 48, "posts_new": 48, "status": "ok"},
+    {"id": 4, "file": "runs/2026-10-30/1330.json", "started_at": "2026-10-30T12:30:00+00:00", "ended_at": "2026-10-30T12:34:00+00:00", "posts_seen": 47, "posts_new": 6, "status": "ok"},
+    {"id": 5, "file": "runs/2026-10-30/1845.json", "started_at": "2026-10-30T17:45:00+00:00", "ended_at": "2026-10-30T17:49:00+00:00", "posts_seen": 47, "posts_new": 5, "status": "degraded"}
+  ],
+  "posts": [
+    {"key": "urn:li:activity:7300000000000000001", "author": "Mariana Oyelaran", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000001", "text": "We now fail deploys when agent evals regress. agent-replay replays recorded sessions against the new build.", "run": 3, "seen": "2026-10-30T08:01:00+00:00", "is_suggested": 0, "relevance": 3, "topic": "Agent Evals", "takeaway": "A harness that fails CI on agent eval regressions.", "why": "Recorded sessions replayed as a CI gate.", "reactions": 1240},
+    {"key": "urn:li:activity:7300000000000000002", "author": "Tomas Reyes", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000002", "text": "agent-replay is the best thing I tried this month.", "run": 3, "seen": "2026-10-30T08:02:00+00:00", "is_suggested": 1, "relevance": 3, "topic": "Agent Evals", "takeaway": "Another recommendation for agent-replay.", "why": "Same repo.", "reactions": 80},
+    {"key": "urn:li:activity:7300000000000000003", "author": "Lena Okafor", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000003", "text": "Our team adopted agent-replay for nightly evals.", "run": 4, "seen": "2026-10-30T12:31:00+00:00", "is_suggested": 1, "relevance": 2, "topic": "Agent Evals", "takeaway": "Team adopts agent-replay.", "why": "Same repo.", "reactions": 30},
+    {"key": "urn:li:activity:7300000000000000004", "author": "Anneliese Brandt", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000004", "text": "LLM judges disagree with humans 31% of the time on tool use. New paper.", "run": 3, "seen": "2026-10-30T08:03:00+00:00", "is_suggested": 1, "relevance": 3, "topic": "Agent Evals", "takeaway": "Model-as-judge is weakest on tool use.", "why": "Measures judge-human disagreement on tool calls.", "reactions": 410},
+    {"key": "urn:li:activity:7300000000000000005", "author": "Samir Khoury", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000005", "text": "1,100 eval cases in 9 failure modes, MIT licensed.", "run": 4, "seen": "2026-10-30T12:32:00+00:00", "is_suggested": 1, "relevance": 2, "topic": "Agent Evals", "takeaway": "A free starter set of eval cases.", "why": "Cases sorted by how agents fail, MIT licensed.", "reactions": 220},
+    {"key": "urn:li:activity:7300000000000000006", "author": "Deng Weiming", "url": null, "author_url": "https://www.linkedin.com/in/deng-weiming-example/", "text": "212 tools, 9 MCP servers, one search step. Wrong-tool rate fell under 1%.", "run": 3, "seen": "2026-10-30T08:04:00+00:00", "is_suggested": 1, "relevance": 3, "topic": "MCP", "takeaway": "Let the client search tools instead of merging them.", "why": "Real numbers on tool search across 212 tools.", "reactions": 530},
+    {"key": "urn:li:activity:7300000000000000007", "author": "Ines Castellanos", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000007", "text": "Long thread on MCP auth: per-user tokens or one server credential? Link in comments.", "run": 5, "seen": "2026-10-30T17:46:00+00:00", "is_suggested": 0, "relevance": 2, "topic": "MCP", "takeaway": "MCP auth: per-user tokens or one credential.", "why": "Both auth models laid out with trade-offs.", "reactions": 95, "link_in_hidden_comment": 1},
+    {"key": "urn:li:activity:7300000000000000008", "author": "Astrid Lindqvist", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000008", "text": "slidefit fits text to the box in python-pptx before rendering.", "run": 5, "seen": "2026-10-30T17:47:00+00:00", "is_suggested": 0, "relevance": 2, "topic": "Slide Layout", "takeaway": "Fit text up front instead of catching overflow.", "why": "Fits text before render instead of after.", "reactions": 60},
+    {"key": "urn:li:activity:7300000000000000009", "author": "Jordan Achebe-Lind", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000009", "text": "Vibe coding moved down the stack.", "run": 3, "seen": "2026-10-30T08:05:00+00:00", "is_suggested": 1, "relevance": 1, "topic": null, "takeaway": "vibe coding moved down the stack", "why": "opinion, nothing shared", "reactions": 900},
+    {"key": "urn:li:activity:7300000000000000010", "author": "Carlos Nwosu", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300000000000000010", "text": "Vibe coding is dead.", "run": 4, "seen": "2026-10-30T12:33:00+00:00", "is_suggested": 1, "relevance": 0, "topic": null, "takeaway": "vibe coding is dead", "why": "muted \"X is dead\"", "reactions": 1500},
+    {"key": "urn:li:activity:7300000000000000011", "author": "Acme Cloud", "url": null, "text": "Try Acme Cloud GPUs today.", "run": 3, "seen": "2026-10-30T08:05:30+00:00", "is_suggested": 0, "is_promoted": 1, "relevance": null, "topic": null, "takeaway": null, "why": null, "reactions": 5},
+    {"key": "urn:li:activity:7200000000000000001", "author": "Priya Raghunathan", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7200000000000000001", "text": "Evals in CI are table stakes now.", "run": 1, "seen": "2026-10-28T12:01:00+00:00", "is_suggested": 0, "relevance": 3, "topic": "Agent Evals", "takeaway": "Evals in CI.", "why": "Eval gates in CI.", "reactions": 300},
+    {"key": "urn:li:activity:7200000000000000002", "author": "Hugo Martins", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7200000000000000002", "text": "Check out agent-replay.", "run": 2, "seen": "2026-10-29T12:01:00+00:00", "is_suggested": 0, "relevance": 2, "topic": "Agent Evals", "takeaway": "agent-replay early mention.", "why": "Eval gates in CI.", "reactions": 40}
+  ],
+  "links": [
+    {"post_key": "urn:li:activity:7300000000000000001", "url": "https://lnkd.in/eAAA01", "resolved_url": "https://github.com/oyelaran-labs/agent-replay", "kind": "github", "title": "oyelaran-labs/agent-replay", "description": "Replays recorded agent sessions against a new build and fails CI on regression.", "meta": {"stars": 2310, "language": "Python", "last_push": "2026-10-28"}},
+    {"post_key": "urn:li:activity:7300000000000000002", "url": "https://lnkd.in/eAAA02", "resolved_url": "https://github.com/oyelaran-labs/agent-replay", "kind": "github", "title": "oyelaran-labs/agent-replay", "description": "Replays recorded agent sessions against a new build and fails CI on regression.", "meta": {"stars": 2310, "language": "Python", "last_push": "2026-10-28"}},
+    {"post_key": "urn:li:activity:7300000000000000003", "url": "https://lnkd.in/eAAA03", "resolved_url": "https://github.com/oyelaran-labs/agent-replay", "kind": "github", "title": "oyelaran-labs/agent-replay", "description": "Replays recorded agent sessions against a new build and fails CI on regression.", "meta": {"stars": 2310, "language": "Python", "last_push": "2026-10-28"}},
+    {"post_key": "urn:li:activity:7300000000000000004", "url": "https://lnkd.in/eAAA04", "resolved_url": "https://arxiv.org/abs/2610.01234", "kind": "paper", "title": "When Does the Judge Disagree?", "description": "1,800 agent trajectories: LLM judges disagree with humans 31% of the time on tool use.", "meta": {"pages": 14, "authors": ["A. Brandt", "K. Ito"]}},
+    {"post_key": "urn:li:activity:7300000000000000005", "url": "https://lnkd.in/eAAA05", "resolved_url": "https://github.com/khoury-ai/agent-failure-cases", "kind": "github", "title": "khoury-ai/agent-failure-cases", "description": "1,100 eval cases in 9 failure modes, JSONL, MIT. Loads into agent-replay.", "meta": {"stars": 640, "last_push": "2026-10-30", "created_at": "2026-10-30"}},
+    {"post_key": "urn:li:activity:7300000000000000006", "url": "https://lnkd.in/eAAA06", "resolved_url": "https://weiming.example.com/tool-search", "kind": "article", "title": "212 tools, 9 MCP servers, one search step", "description": "Wrong-tool rate fell from 7% to under 1% with nothing else changed.", "meta": {"read_min": 6}},
+    {"post_key": "urn:li:activity:7300000000000000008", "url": "https://lnkd.in/eAAA08", "resolved_url": "https://github.com/lindqvist/slidefit", "kind": "github", "title": "lindqvist/slidefit", "description": "Fits text and images to the box in python-pptx before rendering.", "meta": {"stars": 212, "language": "Python", "last_push": "2026-10-25"}},
+    {"post_key": "urn:li:activity:7200000000000000002", "url": "https://lnkd.in/eAAA09", "resolved_url": "https://github.com/oyelaran-labs/agent-replay", "kind": "github", "title": "oyelaran-labs/agent-replay", "description": "Replays recorded agent sessions.", "meta": {"stars": 1900}}
+  ],
+  "sightings": [
+    ["urn:li:activity:7300000000000000001", 4], ["urn:li:activity:7300000000000000001", 5],
+    ["urn:li:activity:7300000000000000004", 4], ["urn:li:activity:7300000000000000006", 4],
+    ["urn:li:activity:7300000000000000006", 5], ["urn:li:activity:7300000000000000009", 4]
+  ],
+  "llm_calls": [
+    {"at": "2026-10-30T08:06:00+00:00", "purpose": "relevance", "model": "claude-haiku-5-5", "usd": 0.004},
+    {"at": "2026-10-30T12:35:00+00:00", "purpose": "relevance", "model": "claude-haiku-5-5", "usd": 0.003},
+    {"at": "2026-10-29T12:05:00+00:00", "purpose": "relevance", "model": "claude-haiku-5-5", "usd": 0.5}
+  ]
+}

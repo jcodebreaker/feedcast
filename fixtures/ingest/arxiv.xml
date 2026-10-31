@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- INVENTED SAMPLE DATA: the paper and authors are fictional. -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <id>http://arxiv.org/abs/2610.01234v1</id>
+    <title>When Does the Judge
+      Disagree?</title>
+    <summary>  We grade 1,800 agent trajectories with LLM judges and humans. Judges disagree 31% of the time on tool use. We release the data.</summary>
+    <author><name>Anneliese Brandt</name></author>
+    <author><name>Kofi Mensah</name></author>
+  </entry>
+</feed>

@@ -1,0 +1,8 @@
+# INVENTED SAMPLE PROFILE for ingest tests.
+role: "AI engineer: agents, evals in CI; TypeScript, Python"
+stack: [TypeScript, Python]
+interests:
+  - {topic: agent evals, weight: 0.9, auto: true}
+not_interested: ["hiring takes"]
+pins: []
+mutes: [crypto]

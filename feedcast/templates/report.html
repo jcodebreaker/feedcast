@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>$title</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+$css
+</style>
+</head>
+<body>
+$body
+<p class="note" id="note" role="status" aria-live="polite" hidden></p>
+<script>
+// Topic tabs filter the cards on the page.
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+  const f = t.dataset.f;
+  document.querySelectorAll('.card[data-g]').forEach(c => { c.hidden = !(f === 'all' || c.dataset.g === f); });
+}));
+// The + / - buttons save through `feedcast serve` (same origin). Opened as a file, or with the server down, say so.
+const note = document.getElementById('note');
+function say(m) { note.textContent = m; note.hidden = false; clearTimeout(note._t); note._t = setTimeout(() => { note.hidden = true; }, 3200); }
+async function save(key, verdict) {
+  if (location.protocol !== 'http:') return false;
+  try {
+    const r = await fetch('/feedback', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({key: key, verdict: verdict})});
+    return r.ok;
+  } catch (e) { return false; }
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-verdict]');
+  if (!b || b.disabled) return;
+  const group = b.parentNode;
+  if (!await save(b.dataset.key, b.dataset.verdict)) {
+    if (!group.querySelector('.fbnote')) group.insertAdjacentHTML('afterbegin', '<span class="fbnote">not saved, feedcast serve is off</span>');
+    return;
+  }
+  group.querySelector('.fbnote')?.remove();
+  group.querySelectorAll('[data-verdict]').forEach(x => x.classList.toggle('on', x === b));
+  say(b.dataset.verdict === 'not_relevant' ? 'Noted. Fewer like this.' : 'Noted. More like this.');
+});
+</script>
+</body>
+</html>
